@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberHack: Programmer vs Rogue AI</title>
+    <!-- Global Error Diagnostic Listener -->
+    <script>
+        window.addEventListener('error', function(e) {
+            console.error("JS ERROR: " + e.message + " at " + e.filename + ":" + e.lineno);
+        });
+    </script>
+    <!-- Google Fonts for retro/futuristic styling -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Fira+Code:wght@400;700&family=Chakra+Petch:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" crossorigin href="/typing-game/assets/index-DMOxaTHg.css">
+</head>
+<body class="crt scanlines">
+    <!-- CRT screen glass effect wrapper -->
+    <div class="screen-wrapper">
+        <div class="glitch-overlay" id="glitch-overlay"></div>
+
+        <!-- HEADER HUD (Visible during gameplay) -->
+        <header class="hud-header hidden" id="main-hud-header">
+            <div class="hud-section player-stats">
+                <div class="hud-item title-neon" id="hud-deck-name">ZERO_DECK.OS</div>
+                <div class="hud-item-progress">
+                    <span class="label">HP:</span>
+                    <div class="bar-container"><div id="player-hp-bar" class="bar hp-fill" style="width: 100%;"></div></div>
+                    <span id="player-hp-text" class="val">100/100</span>
+                </div>
+                <div class="hud-item-progress">
+                    <span class="label">EN:</span>
+                    <div class="bar-container"><div id="player-energy-bar" class="bar energy-fill" style="width: 100%;"></div></div>
+                    <span id="player-energy-text" class="val">100/100</span>
+                </div>
+            </div>
+
+            <div class="hud-section network-status">
+                <div class="hud-item">CREDITS: <span id="credits-hud-display" class="text-yellow">0 CR</span></div>
+                <div class="hud-item">WPM: <span id="wpm-display" class="text-green">0</span> | ACC: <span id="acc-display" class="text-green">100%</span></div>
+                <div class="hud-item">NODE_PROGRESS: <span id="progress-display" class="text-cyan">0/0</span></div>
+            </div>
+
+            <div class="hud-section boss-stats hidden" id="boss-hud-section">
+                <div class="hud-item text-red" id="boss-name-display">AI://GATEWAY_DAEMON</div>
+                <div class="hud-item-progress">
+                    <span class="label">BOSS:</span>
+                    <div class="bar-container"><div id="boss-hp-bar" class="bar boss-fill" style="width: 100%;"></div></div>
+                    <span id="boss-hp-text" class="val">100%</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN TERMINAL VIEWS -->
+        <main class="terminal-main" id="terminal-main">
+            
+            <!-- Screen A: GAME LOBBY -->
+            <section id="screen-lobby" class="terminal-screen active">
+                <div class="lobby-layout">
+                    <div class="lobby-title-block">
+                        <h1 class="glitch-text" data-text="CYBERHACK">CYBERHACK</h1>
+                        <p class="subtitle text-cyan">// PROGRAMMER vs ROGUE AI</p>
+                    </div>
+                    <div class="lobby-menu">
+                        <div class="menu-item active" data-lobby-action="start" tabindex="0">[1] เริ่มโจรกรรมข้อมูล (START GAME)</div>
+                        <div class="menu-item" data-lobby-action="settings" tabindex="0">[2] ปรับแต่งระบบเด็ค (SETTINGS)</div>
+                        <div class="menu-item" data-lobby-action="logs" tabindex="0">[3] ฐานข้อมูลล็อกไฟล์ (LOG ARCHIVES)</div>
+                    </div>
+                    <div class="lobby-help text-dim">
+                        ระบบปฏิบัติการตรวจพบการเจาะข้อมูล... ใช้ [ลูกศรขึ้น/ลง] เพื่อเลื่อนเลือก หรือกดเลขบนแป้นพิมพ์
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen B: MODE SELECT -->
+            <section id="screen-mode-select" class="terminal-screen hidden">
+                <div class="mode-select-layout">
+                    <h2 class="text-cyan">// SELECT CRACKING OPERATIONAL MODE</h2>
+                    <div class="mode-cards">
+                        <div class="mode-card active" data-mode="story" tabindex="0">
+                            <div class="card-title text-green">STORY MODE (โหมดเนื้อเรื่อง)</div>
+                            <div class="card-desc">ทะลวงความลับของ CORE-7 ผ่านคัตซีนและคู่มือฝึกสอน พร้อมตะลุย 10 ด่านย่อย</div>
+                            <div class="card-status text-yellow">มีข้อมูลใหม่กู้คืนได้</div>
+                        </div>
+                        <div class="mode-card" data-mode="custom" tabindex="0">
+                            <div class="card-title text-cyan">CUSTOM MODE (โหมดฝึกซ้อมอิสระ)</div>
+                            <div class="card-desc">ปรับความเร็ว ป้อนคำศัพท์ภายนอก และทดสอบขีดจำกัด WPM ของคุณ</div>
+                            <div class="card-status text-green">พร้อมใช้งาน</div>
+                        </div>
+                        <div class="mode-card" data-mode="classic" tabindex="0">
+                            <div class="card-title text-yellow">CLASSIC MODE (โหมดทดสอบการพิมพ์)</div>
+                            <div class="card-desc">หน้ากระดานพิมพ์แนวนอนแบบดั้งเดิม เน้นทดสอบความเร็วเพียวๆ ด้วยคำศัพท์พื้นฐาน</div>
+                            <div class="card-status text-green">NEW!</div>
+                        </div>
+                    </div>
+                    <div class="control-footer">
+                        <span class="btn-retro" id="btn-mode-back">ย้อนกลับ [ESC]</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen B2: CUSTOM MENU -->
+            <section id="screen-custom-menu" class="terminal-screen hidden">
+                <div class="mode-select-layout">
+                    <h2 class="text-cyan">// SELECT TRAINING MODULE</h2>
+                    <div class="mode-cards">
+                        <div class="mode-card" data-custom-sub="learn" tabindex="0">
+                            <div class="card-title text-yellow">LEARNING CENTER (ศูนย์การเรียนรู้)</div>
+                            <div class="card-desc">บทเรียนการวางนิ้วและพื้นฐานคีย์บอร์ด 10 บทเรียน ตั้งแต่เริ่มต้นจนคล่องแคล่ว</div>
+                        </div>
+                        <div class="mode-card" data-custom-sub="practice" tabindex="0">
+                            <div class="card-title text-cyan">PRACTICE LAB (ห้องทดสอบความเร็ว)</div>
+                            <div class="card-desc">กำหนดคำศัพท์ ระดับความยาก และเวลา เพื่อทดสอบขีดจำกัด WPM ของคุณ</div>
+                        </div>
+                    </div>
+                    <div class="control-footer">
+                        <span class="btn-retro" id="btn-custom-back">ย้อนกลับ [ESC]</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen B2.5: CLASSIC TYPING MODE -->
+            <section id="screen-classic-typing" class="terminal-screen hidden">
+                <div class="classic-typing-layout">
+                    <div class="classic-header">
+                        <div class="classic-lang-select">
+                            <button class="btn-retro btn-classic-lang active" data-lang="en">EN</button>
+                            <button class="btn-retro btn-classic-lang" data-lang="th">TH</button>
+                            <button class="btn-retro btn-classic-lang" data-lang="mixed">MIXED</button>
+                        </div>
+                        <div class="classic-timer text-cyan" id="classic-timer">60s</div>
+                        <button class="btn-retro" id="btn-classic-restart">RESTART [TAB]</button>
+                    </div>
+                    <div class="classic-text-container" id="classic-text-display">
+                        <!-- Words will be injected here -->
+                    </div>
+                    <div class="classic-summary hidden" id="classic-summary-panel">
+                        <h2 class="text-green">TEST COMPLETE</h2>
+                        <div class="classic-stats">
+                            <div class="stat-box"><div class="stat-lbl">WPM</div><div class="stat-val text-cyan" id="classic-wpm">0</div></div>
+                            <div class="stat-box"><div class="stat-lbl">ACCURACY</div><div class="stat-val text-yellow" id="classic-acc">100%</div></div>
+                        </div>
+                    </div>
+                    <div class="control-footer" style="margin-top:20px;">
+                        <span class="btn-retro" id="btn-classic-back">ย้อนกลับ [ESC]</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen B3: LEARN MENU -->
+            <section id="screen-learn-menu" class="terminal-screen hidden">
+                <div class="learn-center-layout">
+                    <!-- Hero Header -->
+                    <div class="learn-hero">
+                        <div class="learn-hero-icon">⌨</div>
+                        <h1 class="learn-hero-title">KEYBOARD MASTERY</h1>
+                        <p class="learn-hero-subtitle">// ZERO'S TRAINING PROTOCOL — 10 MODULES</p>
+                        <p class="learn-hero-desc">ฝึกฝนการวางนิ้วบนแป้นพิมพ์อย่างถูกต้อง ตั้งแต่พื้นฐานจนถึงระดับผู้เชี่ยวชาญ</p>
+                        <div class="learn-progress-bar-container">
+                            <div class="learn-progress-bar" id="learn-overall-progress" style="width: 0%"></div>
+                        </div>
+                        <span class="learn-progress-text" id="learn-progress-text">0 / 10 COMPLETED</span>
+                    </div>
+                    <!-- Lessons Grid -->
+                    <div class="learn-grid" id="learn-lessons-grid">
+                        <!-- Lessons generated by JS -->
+                    </div>
+                    <!-- Footer -->
+                    <div class="learn-footer">
+                        <span class="btn-retro btn-learn-back" id="btn-learn-back">◄ ย้อนกลับ [ESC]</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen B4: PRACTICE CONFIG -->
+            <section id="screen-practice-config" class="terminal-screen hidden">
+                <div class="settings-layout" style="max-width: 600px; margin: 0 auto; background: rgba(0,0,0,0.5); padding: 30px; border: var(--hud-border);">
+                    <h2 class="text-cyan">// PRACTICE_LAB_CONFIGURATION</h2>
+                    <div class="settings-group">
+                        <label>ระดับความยาก (ZONE)</label>
+                        <select id="practice-zone" class="settings-slider" style="background: #000; color: var(--cyber-cyan); border: 1px solid var(--cyber-cyan); padding: 5px;">
+                            <option value="zone1">ZONE 1: พื้นฐาน (4-5 ตัวอักษร)</option>
+                            <option value="zone2">ZONE 2: ปานกลาง (Technical Terms)</option>
+                            <option value="zone3">ZONE 3: ขั้นสูง (Sentences/Complex)</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label>เวลาทดสอบ (วินาที)</label>
+                        <select id="practice-time" class="settings-slider" style="background: #000; color: var(--cyber-cyan); border: 1px solid var(--cyber-cyan); padding: 5px;">
+                            <option value="40">40 วินาที (Sprint)</option>
+                            <option value="60" selected>60 วินาที (Standard)</option>
+                            <option value="90">90 วินาที (Endurance)</option>
+                            <option value="120">120 วินาที (Marathon)</option>
+                        </select>
+                    </div>
+                    <div class="settings-group">
+                        <label>ภาษา (LANGUAGE)</label>
+                        <div style="display: flex; gap: 10px;">
+                            <button class="btn-retro btn-lang active" data-lang="en" style="flex:1">ENGLISH</button>
+                            <button class="btn-retro btn-lang" data-lang="th" style="flex:1">ไทย</button>
+                            <button class="btn-retro btn-lang" data-lang="code" style="flex:1">CODE</button>
+                        </div>
+                    </div>
+                    <div style="margin-top: 30px;">
+                        <button class="btn-retro text-green" id="btn-practice-start" style="width: 100%; font-size: 20px;">เริ่มการฝึกซ้อม (START PRACTICE)</button>
+                    </div>
+                    <div class="control-footer">
+                        <span class="btn-retro" id="btn-practice-back">ย้อนกลับ [ESC]</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen C: NARRATIVE CUTSCENE -->
+            <section id="screen-cutscene" class="terminal-screen hidden">
+                <div class="cutscene-layout">
+                    <div class="terminal-header">
+                        <span class="text-red">📢 SYSTEM INTRUSION DIALOGUE LOG</span>
+                    </div>
+                    <div class="cutscene-chat-box" id="cutscene-chat-box">
+                        <!-- Dialogue typed here dynamically -->
+                    </div>
+                    <div class="cutscene-controls">
+                        <button class="btn-retro" id="btn-cutscene-next">ถัดไป [SPACE]</button>
+                        <button class="btn-retro" id="btn-cutscene-skip">ข้ามคัตซีน [S]</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen D: INTERACTIVE TUTORIAL -->
+            <section id="screen-tutorial" class="terminal-screen hidden">
+                <div class="tutorial-layout">
+                    <div class="tutorial-header-bar" style="display: flex; gap: 15px; margin-bottom: 10px;">
+                        <div class="tutorial-guide-banner" id="tutorial-guide-banner" style="flex: 1; margin-bottom: 0;">
+                            สีเขียว: ศัตรูทั่วไป | สีฟ้า: ดูดพลังงาน | สีชมพู: อันตราย! | สีเหลือง: สะท้อนดาเมจ
+                        </div>
+                        <div class="btn-retro" style="height: auto; align-self: stretch; padding: 10px 15px; font-size: 14px; color: var(--warn-yellow); border-color: var(--warn-yellow); pointer-events: none; white-space: nowrap; display: flex; align-items: center; justify-content: center;">
+                            พิมพ์ 'skip' + [SPACE] เพื่อข้าม
+                        </div>
+                    </div>
+                    <!-- New Zero Chat Box -->
+                    <div id="zero-chat-container" class="hidden">
+                        <div class="zero-avatar"></div>
+                        <div class="zero-dialogue-box">
+                            <div class="zero-name">ZERO</div>
+                            <div id="zero-chat-text"></div>
+                        </div>
+                    </div>
+                    <div class="tutorial-field" id="tutorial-field">
+                        <!-- Falling training nodes will appear here -->
+                        <div class="firewall-barrier">
+                            <div class="firewall-glow"></div>
+                            <span class="barrier-text">TRAINING_SHIELD_ACTIVE</span>
+                        </div>
+                    </div>
+                    <div class="tutorial-hud">
+                        <div class="skills-deck">
+                            <div class="skill-key" id="tut-skill-f1"><span class="key-badge">F1</span><span>HEAL</span></div>
+                            <div class="skill-key" id="tut-skill-f2"><span class="key-badge">F2</span><span>SHIELD</span></div>
+                            <div class="skill-key" id="tut-skill-shift"><span class="key-badge">SHIFT</span><span>DODGE</span></div>
+                            <div class="skill-key" id="tut-skill-ctrl-c"><span class="key-badge">Ctrl+C</span><span>ABSORB</span></div>
+                        </div>
+                    </div>
+                    <div class="terminal-input-bar">
+                        <span class="prompt-text">root@training_deck:~$</span>
+                        <input type="text" id="tutorial-input" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="พิมพ์ตามเป้าหมายเพื่อฝึกสอน...">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 1: CLASS SELECT -->
+            <section id="screen-boot" class="terminal-screen hidden">
+                <div class="terminal-output" id="boot-log">
+                    <div class="text-green">>>> CLASS MODULATION SELECTION ENGAGED...</div>
+                </div>
+                <div class="class-selection-container">
+                    <div class="class-card select-option" data-class="speed" tabindex="0" id="class-speed">
+                        <div class="class-title text-cyan">[1] SPEED HACKER</div>
+                        <div class="class-desc">เน้นความเร็ว (WPM) คำหล่นช้าลง + เวลา Finisher เพิ่มขึ้น 20%</div>
+                        <div class="class-stat">+20% Speed Buffer | +3s Override Timer</div>
+                    </div>
+                    <div class="class-card select-option" data-class="precision" tabindex="0" id="class-precision">
+                        <div class="class-title text-green">[2] PRECISION CODER</div>
+                        <div class="class-desc">เน้นความแม่นยำ ทำดาเมจสูงสุด + ลดบทลงโทษเมื่อพิมพ์ผิด</div>
+                        <div class="class-stat">2x Combo Multiplier | 50% Fail Penalty Avoidance</div>
+                    </div>
+                    <div class="class-card select-option" data-class="brute" tabindex="0" id="class-brute">
+                        <div class="class-title text-yellow">[3] BRUTE FORCE</div>
+                        <div class="class-desc">เน้นความถึก HP สูงสุด + ลดความเสียหายจาก Firewall Breach</div>
+                        <div class="class-stat">+50 Max HP | 30% Damage Mitigation</div>
+                    </div>
+                </div>
+                <div class="terminal-footer">
+                    <span class="blink-cyan">&gt; เลือกคลาสเพื่อติดดตั้งแพ็คเกจเริ่มต้นของคุณ</span>
+                </div>
+            </section>
+
+            <!-- Screen 2: 10-NODE MAP -->
+            <section id="screen-map" class="terminal-screen hidden">
+                <div class="map-layout">
+                    <div class="map-header">
+                        <h2>GATEWAY SECURITY DECRYPTION MAP</h2>
+                        <p class="text-dim">โจรกรรมทีละซับโหนดเพื่อเจาะเข้าไปถึงแกนกลาง (ด่าน 10 บอสหลัก):</p>
+                    </div>
+                    
+                    <div class="map-nodes-container" id="map-nodes-grid">
+                        <!-- 10 level nodes connected visually -->
+                    </div>
+
+                    <div class="map-controls">
+                        <div class="lang-select-hud">
+                            <span class="text-cyan">ภาษาพิมพ์:</span>
+                            <button class="btn-lang active" data-lang="en" id="btn-lang-en">[E] ENG</button>
+                            <button class="btn-lang" data-lang="th" id="btn-lang-th">[T] ไทย</button>
+                            <button class="btn-lang" data-lang="code" id="btn-lang-code">[C] CODE</button>
+                        </div>
+                        <button class="btn-retro" id="btn-map-shop">แผงอัปเกรดเด็ค [S]</button>
+                    </div>
+                    
+                    <div class="terminal-footer">
+                        <p class="text-dim">กด [ESC] เพื่อกลับหน้าล็อบบี้หลัก</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 3: BATTLE ARENA -->
+            <section id="screen-battle" class="terminal-screen hidden">
+                <div class="battle-container">
+                    <div class="boss-talk-banner" id="boss-talk-banner">
+                        <span class="boss-avatar">🤖</span>
+                        <span class="boss-text" id="boss-talk-text">SYS_CHECK: INTRUDER BLOCK MECHANISM ACTIVE...</span>
+                    </div>
+
+                    <div class="play-field" id="play-field">
+                        <!-- Falling word nodes -->
+                        <div class="firewall-barrier" id="firewall-barrier">
+                            <div class="firewall-glow"></div>
+                            <span class="barrier-text">ZERO_FIREWALL_SHIELD</span>
+                        </div>
+                    </div>
+
+                    <div class="battle-hud">
+                        <div class="combo-meter">
+                            <span class="combo-label">COMBO</span>
+                            <span class="combo-value" id="combo-value">1</span>
+                        </div>
+                        <div class="skills-deck">
+                            <div class="skill-key" id="skill-f1" title="[F1] ฟื้นฟู HP 25 (ใช้ 30 EN)">
+                                <span class="key-badge">F1</span>
+                                <span class="skill-name">HEAL</span>
+                            </div>
+                            <div class="skill-key" id="skill-f2" title="[F2] ป้องกันดาเมจ 5 วิ (ใช้ 40 EN)">
+                                <span class="key-badge">F2</span>
+                                <span class="skill-name">SHIELD</span>
+                            </div>
+                            <div class="skill-key" id="skill-f3" title="[F3] สโลว์เวลา 3 วิ (ใช้ 50 EN)">
+                                <span class="key-badge">F3</span>
+                                <span class="skill-name">SLOW</span>
+                            </div>
+                            <div class="skill-key modifier" id="skill-shift" title="[Shift] หลบหลีกการโจมตี">
+                                <span class="key-badge">SHIFT</span>
+                                <span class="skill-name">DODGE</span>
+                            </div>
+                            <div class="skill-key modifier" id="skill-ctrl-c" title="พิมพ์ + [Ctrl+C] ดูดพลังงานจากคำสีฟ้า">
+                                <span class="key-badge">Ctrl+C</span>
+                                <span class="skill-name">ABSORB</span>
+                            </div>
+                            <div class="skill-key modifier" id="skill-ctrl-v" title="พิมพ์ + [Ctrl+V] สะท้อนดาเมจจากคำสีทอง">
+                                <span class="key-badge">Ctrl+V</span>
+                                <span class="skill-name">REFLECT</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="terminal-input-bar">
+                        <span class="prompt-text">root@zero_deck:~$</span>
+                        <input type="text" id="terminal-input" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="พิมพ์คำศัพท์แล้วกด [SPACE]...">
+                    </div>
+
+                    <!-- VIRTUAL KEYBOARD -->
+                    <div class="virtual-keyboard" id="virtual-keyboard">
+                        <!-- Row 0: Numbers & Symbols -->
+                        <div class="keyboard-row">
+                            <div class="key-btn" data-code="Digit1">1</div>
+                            <div class="key-btn" data-code="Digit2">2</div>
+                            <div class="key-btn" data-code="Digit3">3</div>
+                            <div class="key-btn" data-code="Digit4">4</div>
+                            <div class="key-btn" data-code="Digit5">5</div>
+                            <div class="key-btn" data-code="Digit6">6</div>
+                            <div class="key-btn" data-code="Digit7">7</div>
+                            <div class="key-btn" data-code="Digit8">8</div>
+                            <div class="key-btn" data-code="Digit9">9</div>
+                            <div class="key-btn" data-code="Digit0">0</div>
+                            <div class="key-btn" data-code="Minus">-</div>
+                            <div class="key-btn" data-code="Equal">=</div>
+                            <div class="key-btn" data-code="Backspace" style="width: 55px; font-size: 11px;">BACK</div>
+                        </div>
+                        <!-- Row 1: QWERTY -->
+                        <div class="keyboard-row">
+                            <div class="key-btn" data-code="KeyQ">Q</div>
+                            <div class="key-btn" data-code="KeyW">W</div>
+                            <div class="key-btn" data-code="KeyE">E</div>
+                            <div class="key-btn" data-code="KeyR">R</div>
+                            <div class="key-btn" data-code="KeyT">T</div>
+                            <div class="key-btn" data-code="KeyY">Y</div>
+                            <div class="key-btn" data-code="KeyU">U</div>
+                            <div class="key-btn" data-code="KeyI">I</div>
+                            <div class="key-btn" data-code="KeyO">O</div>
+                            <div class="key-btn" data-code="KeyP">P</div>
+                            <div class="key-btn" data-code="BracketLeft">[</div>
+                            <div class="key-btn" data-code="BracketRight">]</div>
+                        </div>
+                        <!-- Row 2: ASDF -->
+                        <div class="keyboard-row">
+                            <div class="key-btn" data-code="KeyA">A</div>
+                            <div class="key-btn" data-code="KeyS">S</div>
+                            <div class="key-btn" data-code="KeyD">D</div>
+                            <div class="key-btn" data-code="KeyF">F</div>
+                            <div class="key-btn" data-code="KeyG">G</div>
+                            <div class="key-btn" data-code="KeyH">H</div>
+                            <div class="key-btn" data-code="KeyJ">J</div>
+                            <div class="key-btn" data-code="KeyK">K</div>
+                            <div class="key-btn" data-code="KeyL">L</div>
+                            <div class="key-btn" data-code="Semicolon">;</div>
+                            <div class="key-btn" data-code="Quote">'</div>
+                        </div>
+                        <!-- Row 3: ZXCV -->
+                        <div class="keyboard-row">
+                            <div class="key-btn" data-code="KeyZ">Z</div>
+                            <div class="key-btn" data-code="KeyX">X</div>
+                            <div class="key-btn" data-code="KeyC">C</div>
+                            <div class="key-btn" data-code="KeyV">V</div>
+                            <div class="key-btn" data-code="KeyB">B</div>
+                            <div class="key-btn" data-code="KeyN">N</div>
+                            <div class="key-btn" data-code="KeyM">M</div>
+                            <div class="key-btn" data-code="Comma">,</div>
+                            <div class="key-btn" data-code="Period">.</div>
+                            <div class="key-btn" data-code="Slash">/</div>
+                        </div>
+                        <!-- Row 4: Spacebar -->
+                        <div class="keyboard-row">
+                            <div class="key-btn space-key" data-code="Space" style="width: 260px; font-size: 11px;">SPACE</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 4: FINISHER OVERLAY -->
+            <section id="screen-finisher" class="terminal-screen hidden">
+                <div class="finisher-container">
+                    <div class="finisher-header text-red blink">
+                        🚨 SYSTEM OVERRIDE ACTIVE: CORE TERMINATE ENGAGED 🚨
+                    </div>
+                    <div class="finisher-timer-wrapper">
+                        TIMER: <span id="finisher-timer" class="text-red">15.00s</span>
+                    </div>
+                    <div class="passage-box" id="passage-box"></div>
+                    <div class="passage-input-bar">
+                        <input type="text" id="passage-input" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="พิมพ์ประโยคดีคริปต์ให้ครบทั้งหมด...">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 5: NUMPAD BLOCKER -->
+            <section id="screen-numpad" class="terminal-screen hidden">
+                <div class="numpad-container">
+                    <div class="numpad-title text-cyan">🔒 NODE NUMERICAL BYPASS DETECTED</div>
+                    <div class="numpad-desc">พิมพ์รหัสด้วยปุ่มตัวเลขเพื่อปลดรหัสการสื่อสาร:</div>
+                    <div class="numpad-passcode" id="numpad-target">0000</div>
+                    <div class="numpad-input text-green" id="numpad-display">----</div>
+                    <div class="numpad-timer">TIMER: <span id="numpad-time-left" class="text-yellow">5s</span></div>
+                </div>
+            </section>
+
+            <!-- Screen 6: NARRATIVE LOGS -->
+            <section id="screen-logs" class="terminal-screen hidden">
+                <div class="logs-container">
+                    <h2>DECRYPTED ARCHIVE DATA</h2>
+                    <div class="logs-content-layout">
+                        <div class="logs-sidebar" id="logs-sidebar-list"></div>
+                        <div class="log-detail" id="log-detail-viewer">
+                            <p class="text-dim">เลือกบันทึกที่กู้คืนมาได้เพื่อทำการวิเคราะห์ข้อมูล...</p>
+                        </div>
+                    </div>
+                    <div class="terminal-footer">
+                        <button class="btn-retro" id="btn-close-logs">กลับสู่หน้าล็อบบี้ [ESC]</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 7: SCORE SUMMARY SCREEN -->
+            <section id="screen-summary" class="terminal-screen hidden">
+                <div class="summary-container">
+                    <h2 class="text-green title-glow" id="summary-title">NODE OVERRIDE COMPLETE</h2>
+                    
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <div class="stat-label">WPM (ความเร็วพิมพ์)</div>
+                            <div class="stat-val text-cyan" id="summary-wpm">0</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="stat-label">ACCURACY (ความแม่นยำ)</div>
+                            <div class="stat-val text-green" id="summary-accuracy">100%</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="stat-label">CREDITS EARNED</div>
+                            <div class="stat-val text-yellow" id="summary-credits-earned">+0 CR</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="stat-label">RATING (ระดับดาว)</div>
+                            <div class="stat-val text-red" id="summary-stars">☆☆☆</div>
+                        </div>
+                    </div>
+
+                    <div class="summary-controls">
+                        <button class="btn-retro" id="btn-summary-retry">ทำซ้ำ [R]</button>
+                        <button class="btn-retro" id="btn-summary-upgrade">อัปเกรด & ซื้อไอเท็ม [S]</button>
+                        <button class="btn-retro" id="btn-summary-map">กลับสู่แผนที่ [M]</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen E: UPGRADE & HACKER SHOP -->
+            <section id="screen-shop" class="terminal-screen hidden">
+                <div class="shop-layout">
+                    <div class="shop-header">
+                        <h2>DECK HARDWARE UPGRADES & ITEM SHOP</h2>
+                        <p class="text-dim">นำ Credits ที่ได้รับจากการเคลียร์ด่านมาอัปเกรดความสามารถระบบเด็ค:</p>
+                        <div class="shop-wallet text-yellow">บัญชีกระเป๋า: <span id="shop-credits-display">0</span> CR</div>
+                    </div>
+
+                    <div class="shop-grid">
+                        <!-- Stats Upgrades -->
+                        <div class="shop-card select-shop-item" data-item="up_hp" tabindex="0">
+                            <div class="item-title text-cyan">เพิ่มพลังโครงสร้างเด็ค (MAX HP)</div>
+                            <div class="item-desc">เพิ่ม HP สูงสุดขึ้น +25 หน่วยอย่างถาวร</div>
+                            <div class="item-cost text-yellow">ราคา: 150 CR</div>
+                        </div>
+                        <div class="shop-card select-shop-item" data-item="up_en" tabindex="0">
+                            <div class="item-title text-cyan">เพิ่มแบตเตอรี่สำรอง (MAX ENERGY)</div>
+                            <div class="item-desc">เพิ่มพลังงานสูงสุดของบอร์ดเด็คขึ้น +20 หน่วย</div>
+                            <div class="item-cost text-yellow">ราคา: 150 CR</div>
+                        </div>
+                        <div class="shop-card select-shop-item" data-item="item_auto_shield" tabindex="0">
+                            <div class="item-title text-green">เกราะอัจฉริยะ (AUTO SHIELD CHIP)</div>
+                            <div class="item-desc">รับบาเรียป้องกันดาเมจจากการพิมพ์ผิด 1 ครั้งต่อด่านโดยอัตโนมัติ</div>
+                            <div class="item-cost text-yellow">ราคา: 100 CR</div>
+                        </div>
+                        <div class="shop-card select-shop-item" data-item="item_slow_overload" tabindex="0">
+                            <div class="item-title text-green">คอร์สโลว์คูลดาวน์ (SLOW CHIP)</div>
+                            <div class="item-desc">ความสามารถสโลว์เวลา (F3) นานเพิ่มขึ้นอีก +1.5 วินาที</div>
+                            <div class="item-cost text-yellow">ราคา: 120 CR</div>
+                        </div>
+                    </div>
+
+                    <div class="shop-controls">
+                        <button class="btn-retro" id="btn-shop-map">เข้าสู่แผนที่ด่าน [ESC]</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- FOOTER BAR -->
+        <footer class="hud-footer">
+            <span class="footer-control">[ESC] การตั้งค่า</span>
+            <span class="footer-credit">PROJECT // CYBER_HACK v1.1.0</span>
+            <button class="footer-sound" id="btn-sound-toggle" tabindex="0">🔇 ปิดเสียง [Ctrl+M]</button>
+        </footer>
+
+        <!-- SETTINGS PANEL MODAL -->
+        <div class="settings-modal hidden" id="settings-modal">
+            <div class="settings-content">
+                <h2 class="text-cyan">ZERO DECK CONFIGURATION</h2>
+                <hr class="neon-line">
+                <div class="setting-row">
+                    <label>ปิดเอฟเฟกต์หน้าจอสั่น & Glitch (Safety Mode)</label>
+                    <input type="checkbox" id="setting-photosensitive">
+                </div>
+                <div class="setting-row">
+                    <label>ปิดเอฟเฟกต์เส้นสแกน CRT</label>
+                    <input type="checkbox" id="setting-scanlines" checked>
+                </div>
+                <div class="setting-row">
+                    <label>ระดับเสียงเพลง & เอฟเฟกต์</label>
+                    <input type="range" id="setting-volume" min="0" max="100" value="50">
+                </div>
+                <hr class="neon-line">
+                <div class="settings-actions" style="display: flex; gap: 10px; justify-content: center;">
+                    <button class="btn-retro" id="btn-settings-map">กลับสู่แผนที่</button>
+                    <button class="btn-retro" id="btn-settings-retry">เริ่มด่านใหม่</button>
+                </div>
+                <hr class="neon-line">
+                <div class="instructions-box">
+                    <h3 class="text-green">คู่มือแฮ็กเกอร์:</h3>
+                    <ul>
+                        <li><span class="text-cyan">พิมพ์คำศัพท์</span> แล้วกด <span class="text-cyan">[SPACE]</span> เพื่อยิงทำลายบั๊ก</li>
+                        <li>บอสจะมีออร่าสีแดง ให้เตรียมหลบด้วยการกดปุ่ม <span class="text-yellow">[Shift]</span></li>
+                        <li>ใช้ <span class="text-green">[F1]</span> (Heal), <span class="text-green">[F2]</span> (Shield), <span class="text-green">[F3]</span> (Slow) เพื่อใช้สกิล</li>
+                        <li>พิมพ์แล้วกด <span class="text-cyan">[Ctrl+C]</span> (Absorb) / <span class="text-cyan">[Ctrl+V]</span> (Reflect)</li>
+                    </ul>
+                </div>
+                <button class="btn-retro" id="btn-close-settings">ย้อนกลับ [ESC]</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- LOAD CUSTOM GAME SCRIPTS -->
+    <script src="words.js?v=2"></script>
+    <script src="audio.js?v=2"></script>
+    <script src="app.js?v=2"></script>
+</body>
+</html>
