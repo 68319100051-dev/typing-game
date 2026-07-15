@@ -1,0 +1,30 @@
+{
+  "esversion": 6,
+  "browser": true,
+  "undef": true,
+  "unused": true,
+  "globals": {
+    "console": false,
+    "setTimeout": false,
+    "setInterval": false,
+    "clearTimeout": false,
+    "clearInterval": false,
+    "document": false,
+    "window": false,
+    "Math": false,
+    "parseInt": false,
+    "Date": false,
+    "AudioContext": false,
+    "webkitAudioContext": false,
+    "STORY_CUTSCENES": false,
+    "LEVEL_CONFIGS": false,
+    "WORD_BANK": false,
+    "TUTORIAL_STEPS": false,
+    "PRE_LEVEL_DIALOGUES": false,
+    "NARRATIVE_LOGS": false,
+    "initAudio": false,
+    "playSound": false,
+    "startMusicLoop": false,
+    "audioCtx": false
+  }
+}
