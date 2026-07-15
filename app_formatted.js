@@ -28,6 +28,18 @@ let lobbyIndex = 0, modeIndex = 0, classIndex = 0;
 let learnState = {
  lesson: null, subIndex: 0, chatInterval: null }
 ;
+function setupSoundControl() {
+    const btn = document.getElementById("btn-toggle-mute");
+    if (btn) {
+      btn.addEventListener("click", () => {
+        state.settings.muted = !state.settings.muted;
+        setVolume(state.settings.muted ? 0 : state.settings.volume);
+        btn.textContent = state.settings.muted ? "UNMUTE" : "MUTE";
+      });
+    }
+    setVolume(state.settings.volume || 50);
+  }
+
 document.addEventListener("DOMContentLoaded", () => {
     console.log("CYBERHACK: DOM Loaded.");
         inputField = document.getElementById("terminal-input");
