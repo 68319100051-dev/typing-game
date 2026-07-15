@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && copy words.js docs\\ && copy audio.js docs\\ && copy app.js docs\\ && copy style.css docs\\ && copy back_lobby.jpg docs\\",
+    "build": "tsc && vite build && node copy-legacy.cjs",
     "preview": "vite preview",
     "lint": "eslint src --ext ts,tsx",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,html}\"",
