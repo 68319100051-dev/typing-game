@@ -1,8 +1,7 @@
 console.log("CYBERHACK: Engine initializing...");
 const KEYBOARD_MAP = {
     en: {
-        'Digit1': '1', 'Digit2': '2', 'Digit3': '3', 'Digit4': '4', 'Digit5': '5', 'Digit6': '6', 'Digit7': '7', 'Digit8': '8', 'Digit9': '9', 'Digit0': '0', 'Minus': '-', 'Equal': '=',        'KeyQ': 'Q', 'KeyW': 'W', 'KeyE': 'E', 'KeyR': 'R', 'KeyT': 'T', 'KeyY': 'Y', 'KeyU': 'U', 'KeyI': 'I', 'KeyO': 'O', 'KeyP': 'P', 'BracketLeft': '[', 'BracketRight': ']',        'KeyA': 'A', 'KeyS': 'S', 'KeyD': 'D', 'KeyF': 'F', 'KeyG': 'G', 'KeyH': 'H', 'KeyJ': 'J', 'KeyK': 'K', 'KeyL': 'L', 'Semicolon': ';
-', 'Quote': "'",        'KeyZ': 'Z', 'KeyX': 'X', 'KeyC': 'C', 'KeyV': 'V', 'KeyB': 'B', 'KeyN': 'N', 'KeyM': 'M', 'Comma': ',', 'Period': '.', 'Slash': '/'    }
+        'Digit1': '1', 'Digit2': '2', 'Digit3': '3', 'Digit4': '4', 'Digit5': '5', 'Digit6': '6', 'Digit7': '7', 'Digit8': '8', 'Digit9': '9', 'Digit0': '0', 'Minus': '-', 'Equal': '=',        'KeyQ': 'Q', 'KeyW': 'W', 'KeyE': 'E', 'KeyR': 'R', 'KeyT': 'T', 'KeyY': 'Y', 'KeyU': 'U', 'KeyI': 'I', 'KeyO': 'O', 'KeyP': 'P', 'BracketLeft': '[', 'BracketRight': ']',        'KeyA': 'A', 'KeyS': 'S', 'KeyD': 'D', 'KeyF': 'F', 'KeyG': 'G', 'KeyH': 'H', 'KeyJ': 'J', 'KeyK': 'K', 'KeyL': 'L', 'Semicolon': '; ', 'Quote': "'",        'KeyZ': 'Z', 'KeyX': 'X', 'KeyC': 'C', 'KeyV': 'V', 'KeyB': 'B', 'KeyN': 'N', 'KeyM': 'M', 'Comma': ',', 'Period': '.', 'Slash': '/'    }
 ,    th: {
         'Digit1': 'เน…', 'Digit2': '/', 'Digit3': '-', 'Digit4': 'เธ ', 'Digit5': 'เธ–', 'Digit6': 'เธธ', 'Digit7': 'เธถ', 'Digit8': 'เธ', 'Digit9': 'เธ•', 'Digit0': 'เธ', 'Minus': 'เธ', 'Equal': 'เธ',        'KeyQ': 'เน', 'KeyW': 'เน', 'KeyE': 'เธณ', 'KeyR': 'เธ', 'KeyT': 'เธฐ', 'KeyY': 'เธฑ', 'KeyU': 'เธต', 'KeyI': 'เธฃ', 'KeyO': 'เธ', 'KeyP': 'เธข', 'BracketLeft': 'เธ', 'BracketRight': 'เธฅ',        'KeyA': 'เธ', 'KeyS': 'เธซ', 'KeyD': 'เธ', 'KeyF': 'เธ”', 'KeyG': 'เน€', 'KeyH': 'เน', 'KeyJ': 'เน', 'KeyK': 'เธฒ', 'KeyL': 'เธช', 'Semicolon': 'เธง', 'Quote': 'เธ',        'KeyZ': 'เธ', 'KeyX': 'เธ', 'KeyC': 'เน', 'KeyV': 'เธญ', 'KeyB': 'เธด', 'KeyN': 'เธ—', 'KeyM': 'เธก', 'Comma': 'เน', 'Period': 'เธ', 'Slash': '.'    }
 }
@@ -42,7 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
      setupSoundControl();
     setupKeyboardNavigation();
     addKeyboardListeners();
-    // Lobby clicks    document.querySelectorAll("#screen-lobby .menu-item").forEach((item, idx) => {
+    // Lobby clicks
+    document.querySelectorAll("#screen-lobby .menu-item").forEach((item, idx) => {
         item.addEventListener("click", () => {
             const items = document.querySelectorAll("#screen-lobby .menu-item");
             items[lobbyIndex].classList.remove("active");
@@ -102,24 +102,24 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 1;
  i <= 10;
  i++) if (state.levelStars[i] === undefined) state.levelStars[i] = 0;
-        // Virtual Keyboard Effects    document.addEventListener("keydown", (e) => {
+        // Virtual Keyboard Effects
+        document.addEventListener("keydown", (e) => {
         if (e.repeat) return;
         const btn = document.querySelector(`.key-btn[data-code="${
 e.code}
-"]`);
-        if (btn) btn.classList.add("correct-press");
+"]`);         if (btn) btn.classList.add("correct-press");
     }
 );
     document.addEventListener("keyup", (e) => {
         const btn = document.querySelector(`.key-btn[data-code="${
 e.code}
-"]`);
-        if (btn) btn.classList.remove("correct-press", "wrong-press");
+"]`);         if (btn) btn.classList.remove("correct-press", "wrong-press");
     }
 );
     updateWallet();
     showScreen("lobby");
- // Force lobby initialization    console.log("CYBERHACK: Ready.");
+ // Force lobby initialization
+ console.log("CYBERHACK: Ready.");
 }
 );
 function setupKeyboardNavigation() {
@@ -292,13 +292,15 @@ function setupKeyboardNavigation() {
  skipLearnChat();
             }
         }
-        // Global mute shortcut        if (e.ctrlKey && e.key.toLowerCase() === "m") {
+        // Global mute shortcut
+        if (e.ctrlKey && e.key.toLowerCase() === "m") {
             e.preventDefault();
             const muted = toggleMute();
             document.getElementById("btn-sound-toggle").textContent = muted ? "๐” เน€เธเธดเธ”เน€เธชเธตเธขเธ [Ctrl+M]" : "๐” เธเธดเธ”เน€เธชเธตเธขเธ [Ctrl+M]";
             return;
         }
-        // Global ESC handler        if (e.key === "Escape") {
+        // Global ESC handler
+        if (e.key === "Escape") {
             if (!settingsModal.classList.contains("hidden")) {
  toggleSettings();
  }
@@ -332,12 +334,14 @@ function setupKeyboardNavigation() {
  }
             return;
         }
-        // Map Screen Language Shortcuts        if (state.screen === "map" && !e.ctrlKey && !e.altKey && !e.metaKey) {
+        // Map Screen Language Shortcuts
+        if (state.screen === "map" && !e.ctrlKey && !e.altKey && !e.metaKey) {
             if (e.key.toLowerCase() === "e") setLanguage("en");
             else if (e.key.toLowerCase() === "t") setLanguage("th");
             else if (e.key.toLowerCase() === "c") setLanguage("code");
         }
-        // Practice Config Screen - Language selection with E/T/C        if (state.screen === "practice-config" && !e.ctrlKey && !e.altKey && !e.metaKey) {
+        // Practice Config Screen - Language selection with E/T/C
+        if (state.screen === "practice-config" && !e.ctrlKey && !e.altKey && !e.metaKey) {
             if (e.key.toLowerCase() === "e") {
  setLanguage("en");
  document.querySelectorAll("#screen-practice-config .btn-lang").forEach(b => b.classList.remove("active"));
@@ -360,9 +364,11 @@ function setupKeyboardNavigation() {
     }
 );
 }
-// Use event delegation to handle all button clicks with keyboard supportfunction addKeyboardListeners() {
+// Use event delegation to handle all button clicks with keyboard support
+function addKeyboardListeners() {
     const handleButtonKeydown = (e) => {
-        // Check if the clicked element or parent is a button-like element        const isButton = e.target.matches('.btn-retro, .menu-item, .class-card, .mode-card, .learn-card, .shop-card, .select-shop-item, .btn-lang, button, .log-item-btn, [data-custom-sub]');
+        // Check if the clicked element or parent is a button-like element
+        const isButton = e.target.matches('.btn-retro, .menu-item, .class-card, .mode-card, .learn-card, .shop-card, .select-shop-item, .btn-lang, button, .log-item-btn, [data-custom-sub]');
         if (!isButton) return;
                 if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
@@ -370,11 +376,13 @@ function setupKeyboardNavigation() {
         }
     }
 ;
-        // Use event delegation - single listener on document    if (!document.__keyboardListenerAttached) {
+        // Use event delegation - single listener on document
+        if (!document.__keyboardListenerAttached) {
         document.addEventListener('keydown', handleButtonKeydown);
         document.__keyboardListenerAttached = true;
     }
-        // Ensure all button-like elements are focusable    const selectors = [        '.btn-retro', '.menu-item', '.class-card', '.mode-card', '.learn-card',        '.shop-card', '.select-shop-item', '.btn-lang', '#btn-mode-back', '#btn-close-logs',        '#btn-close-settings', '#btn-cutscene-next', '#btn-cutscene-skip', '#btn-summary-retry',        '#btn-summary-map', '#btn-summary-upgrade', '#btn-map-shop', '#btn-shop-map', 'button', '.log-item-btn',        '[data-custom-sub]', '[data-lobby-action]'    ];
+        // Ensure all button-like elements are focusable
+        const selectors = [        '.btn-retro', '.menu-item', '.class-card', '.mode-card', '.learn-card',        '.shop-card', '.select-shop-item', '.btn-lang', '#btn-mode-back', '#btn-close-logs',        '#btn-close-settings', '#btn-cutscene-next', '#btn-cutscene-skip', '#btn-summary-retry',        '#btn-summary-map', '#btn-summary-upgrade', '#btn-map-shop', '#btn-shop-map', 'button', '.log-item-btn',        '[data-custom-sub]', '[data-lobby-action]'    ];
     selectors.forEach(sel => {
         document.querySelectorAll(sel).forEach(el => {
             if (!el.hasAttribute('tabindex') && el.getAttribute('tabindex') !== '0') {
@@ -395,7 +403,8 @@ function handleLobbyAction(action) {
 function showScreen(screenName) {
     try {
         state.screen = screenName;
-        // Reset navigation indices for menu screens        if (screenName === "custom-menu") modeIndex = 0;
+        // Reset navigation indices for menu screens
+        if (screenName === "custom-menu") modeIndex = 0;
         if (screenName === "learn-menu") state.learnCardIndex = 0;
         if (screenName === "boot") classIndex = 0;
                 const mainHUD = document.getElementById("main-hud-header");
@@ -500,7 +509,8 @@ isDone ? "โ“ PASSED" : "โ–บ START"}
         grid.appendChild(card);
     }
 );
-    // Update overall progress    const pct = Math.round((completed.length / LEARN_LESSONS.length) * 100);
+    // Update overall progress
+    const pct = Math.round((completed.length / LEARN_LESSONS.length) * 100);
     const bar = document.getElementById("learn-overall-progress");
  if (bar) bar.style.width = pct + "%";
     const txt = document.getElementById("learn-progress-text");
@@ -509,7 +519,6 @@ completed.length}
  / ${
 LEARN_LESSONS.length}
  COMPLETED`;
-    // Ensure newly added lesson cards are focusable and have keyboard activation    addKeyboardListeners();
 }
 function startLearnLesson(lesson) {
     initAudio();
@@ -518,7 +527,8 @@ function startLearnLesson(lesson) {
     learnState.subIndex = 0;
     showScreen("tutorial");
     state.tutorial.step = 99;
-        // Keyboard Language Alert logic    let langHint = "";
+        // Keyboard Language Alert logic
+        let langHint = "";
     const banner = document.getElementById("tutorial-guide-banner");
     if (lesson.id >= 5 && lesson.id <= 8) {
         langHint = " [เธเธฃเธธเธ“เธฒเน€เธเธฅเธตเนเธขเธเน€เธเนเธเนเธเนเธเธเธดเธกเธเนเนเธ—เธข]";
@@ -547,7 +557,6 @@ function loadSubLesson() {
     if (!sub) {
         playSound("win");
  tutorialInput.oninput = null;
-        // Save completion        const completed = JSON.parse(localStorage.getItem("learnCompleted") || "[]");
         if (!completed.includes(learnState.lesson.id)) {
  completed.push(learnState.lesson.id);
  localStorage.setItem("learnCompleted", JSON.stringify(completed));
@@ -646,14 +655,7 @@ zone.toUpperCase()}
     let timeLeft = timeLimit;
  const timerDisplay = document.createElement("div");
     timerDisplay.id = "practice-timer-overlay";
- timerDisplay.style.cssText = "position:absolute;
- top:80px;
- right:20px;
- font-size:40px;
- color:var(--cyber-cyan);
- text-shadow:var(--neon-cyan-glow);
- z-index:100;
-";
+ timerDisplay.style.cssText = "position:absolute;  top:80px;  right:20px;  font-size:40px;  color:var(--cyber-cyan);  text-shadow:var(--neon-cyan-glow);  z-index:100; ";
     timerDisplay.textContent = timeLeft + "s";
  playField.appendChild(timerDisplay);
     clearInterval(state.practiceCountdown);
@@ -1393,12 +1395,7 @@ safeWord}
  i++) {
  if (i < typed.length) h += `<span class="${
 typed[i] === safeWord[i] ? 'typed-match' : 'typed-wrong'}
-">${
-escapeHtml(safeWord[i])}
-</span>`;
- else h += safeWord[i];
- }
- return `<span class="passage-word current">${
+">${ escapeHtml(safeWord[i])} </span>`;  else h += safeWord[i];  }  return `<span class="passage-word current">${
 h}
 </span>`;
  }
@@ -1411,7 +1408,8 @@ safeWord}
 function handleFinisherInput(e) {
     const v = e.target.value, cw = state.finisher.words[state.finisher.currentIndex];
  playSound("click");
-     // Count keystrokes based on length difference for better mobile/IME support    const currentLen = v.length;
+     // Count keystrokes based on length difference for better mobile/IME support
+     const currentLen = v.length;
     const prevLen = state.finisher.prevInputLen || 0;
     if (currentLen > prevLen) state.totalKeystrokes += (currentLen - prevLen);
     state.finisher.prevInputLen = currentLen;
@@ -1516,7 +1514,8 @@ function renderShopSelections() {
     }
 );
 }
-// Reapply keyboard listeners after dynamic shop selectionsfunction purchaseUpgrade(id) {
+// Reapply keyboard listeners after dynamic shop selections
+function purchaseUpgrade(id) {
     initAudio();
  const costs = {
  up_hp: 150, up_en: 150, item_auto_shield: 100, item_slow_overload: 120 }
@@ -1588,8 +1587,7 @@ function setLanguage(l) {
  document.querySelectorAll(".btn-lang").forEach(b => b.classList.remove("active"));
  const b = document.querySelector(`.btn-lang[data-lang="${
 l}
-"]`);
- if (b) b.classList.add("active");
+"]`);  if (b) b.classList.add("active");
  updateKeyboardLayout(l);
  }
 function updateKeyboardLayout(lang) {
@@ -1629,25 +1627,10 @@ u ? '' : 'locked'}
  b.classList.add("selected");
  document.getElementById("log-detail-viewer").innerHTML = `<h3>${
 log.title}
-</h3><hr class="neon-line" style="margin:15px 0;
-"><pre style="font-family:monospace;
+</h3><hr class="neon-line" style="margin:15px 0; "><pre style="font-family:monospace;
 white-space:pre-wrap;
 font-size:14px;
-">${
-log.content}
-</pre>`;
- }
-);
-        s.appendChild(b);
-    }
-);
-}
-const CURRENT_SAVE_VERSION = 2;
-function saveGame() {
- const d = {
- version: CURRENT_SAVE_VERSION, maxUnlockedLevel: state.maxUnlockedLevel, levelStars: state.levelStars, credits: state.credits, upgrades: state.upgrades, unlockedLogs: state.unlockedLogs, playerClass: state.playerClass, settings: state.settings }
-;
- localStorage.setItem("cyberhack_save", JSON.stringify(d));
+">${ log.content} </pre>`;  } );         s.appendChild(b);     } ); } const CURRENT_SAVE_VERSION = 2; function saveGame() {  const d = {  version: CURRENT_SAVE_VERSION, maxUnlockedLevel: state.maxUnlockedLevel, levelStars: state.levelStars, credits: state.credits, upgrades: state.upgrades, unlockedLogs: state.unlockedLogs, playerClass: state.playerClass, settings: state.settings } ;  localStorage.setItem("cyberhack_save", JSON.stringify(d));
  }
 function loadGame() {
  const r = localStorage.getItem("cyberhack_save");
@@ -1733,670 +1716,8 @@ function setupSettings() {
         }
     });
 }
-let lastHUDUpdate = 0;
-function updatePhysics() {
-    if (playField.clientHeight <= 0) return;
- const firewallY = playField.clientHeight - 40;
-    let mult = state.timeSlowActive ? 0.4 : 1.0;
- if (state.timeSlowActive) {
- state.timeSlowDuration -= 50;
- if (state.timeSlowDuration <= 0) state.timeSlowActive = false;
- }
-    if (state.shieldActive) {
- state.shieldDuration -= 50;
- if (state.shieldDuration <= 0) state.shieldActive = false;
- }
-    for (let i = state.fallingWords.length - 1;
- i >= 0;
- i--) {
- const w = state.fallingWords[i];
- w.y += w.speed * mult;
- w.element.style.top = `${
-w.y}
-px`;
- if (state.combo >= 3 && !state.settings.photosensitive) w.element.classList.add("combo-glow");
- else w.element.classList.remove("combo-glow");
- if (w.y >= firewallY + 20) {
- triggerBreach(w);
- state.fallingWords.splice(i, 1);
- }
- }
-    const now = performance.now();
-    if (now - lastHUDUpdate > 100) {
- updateHUD();
- lastHUDUpdate = now;
- }
-}
-function triggerBreach(w) {
-    w.element.remove();
- playSound("breach");
- triggerVisualGlitch();
- if (state.shieldActive) return;
- if (state.upgrades.autoShield > 0 && Math.random() < 0.5) {
- speakBossBanter("AUTO_SHIELD!");
- playSound("shield");
- return;
- }
-    let dmg = w.type === "hazard" ? 25 : 12;
- if (state.playerClass === "brute") dmg = Math.floor(dmg * 0.7);
-    state.hp = Math.max(0, state.hp - dmg);
- state.streak = 0;
- state.combo = 1;
- if (state.hp <= 0) gameOver();
-}
-function handleMainTypingInput(e) {
-    state.activeTyping = e.target.value.trim();
- playSound("click");
- if (e.inputType !== "deleteContentBackward" && e.inputType !== "deleteContentForward") state.totalKeystrokes++;
-    const match = state.fallingWords.find(w => w.displayWordText.startsWith(state.activeTyping) && state.activeTyping.length > 0);
-    if (match) {
- match.element.innerHTML = `<span class="typed-match">${
-match.displayWordText.substring(0, state.activeTyping.length)}
-</span>${
-match.displayWordText.substring(state.activeTyping.length)}
-`;
- }
-    state.fallingWords.forEach(w => {
- if (w !== match) w.element.textContent = w.displayWordText;
- }
-);
-}
-function handleActionKeys(e) {
-    if (e.key === " ") {
- e.preventDefault();
- fireBlaster("space");
- }
-    else if (e.key === "Shift") {
- e.preventDefault();
- triggerDodge();
- }
-    else if (e.key === "F1") {
- e.preventDefault();
- useSkillHeal();
- }
-    else if (e.key === "F2") {
- e.preventDefault();
- useSkillShield();
- }
-    else if (e.key === "F3") {
- e.preventDefault();
- useSkillSlow();
- }
-    else if (e.ctrlKey && e.key.toLowerCase() === "c") {
- e.preventDefault();
- fireBlaster("ctrl-c");
- }
-    else if (e.ctrlKey && e.key.toLowerCase() === "v") {
- e.preventDefault();
- fireBlaster("ctrl-v");
- }
-}
-function fireBlaster(actionKey = "space") {
-    const t = state.activeTyping;
- let idx = state.fallingWords.findIndex(w => w.displayWordText === t);
-    if (idx !== -1) {
-        const w = state.fallingWords[idx];
-        if (w.type === 'absorb' && actionKey !== 'ctrl-c') {
- playSound("error");
- return;
- }
-        if (w.type === 'reflect' && actionKey !== 'ctrl-v') {
- playSound("error");
- return;
- }
-        if ((w.type === 'normal' || w.type === 'hazard') && actionKey !== 'space') {
- playSound("error");
- return;
- }
-        playSound("laser");
- w.element.remove();
- state.fallingWords.splice(idx, 1);
-        state.correctKeystrokes += t.length;
- state.streak++;
-        let d = state.playerClass === "precision" ? 8 : 5;
- if (state.streak % (state.playerClass === "precision" ? 5 : 8) === 0) state.combo++;
-        let fd = d * state.combo;
- if (w.type === 'absorb') {
- state.energy = Math.min(state.maxEnergy, state.energy + 30);
- playSound("heal");
- }
- else if (w.type === 'reflect') fd *= 2;
-        state.score += 100 * state.combo;
- const c = LEVEL_CONFIGS[state.currentLevel];
-        if (c.type === "boss" || c.type === "mini-boss") {
- state.bossHp = Math.max(0, state.bossHp - fd);
- if (c.type === "boss" && state.bossHp <= 20 && state.bossHp > 0 && !state.finisherTriggered) {
- state.finisherTriggered = true;
- triggerFinisherPhase();
- }
- else if (state.bossHp <= 0) victory();
- }
-        else {
- state.wordsClearedThisLevel++;
- if (state.wordsClearedThisLevel >= c.wordsToClear) victory();
- }
-        state.activeTyping = "";
- inputField.value = "";
-    }
- else if (t.length > 0) {
- playSound("error");
- state.streak = 0;
- state.combo = 1;
- }
-    updateHUD();
-}
-function triggerDodge() {
- if (state.dodgeWindowActive) {
- clearTimeout(state.dodgeTimeout);
- state.dodgeWindowActive = false;
- playField.classList.remove("warning-flash");
- playSound("shield");
- document.getElementById("glitch-overlay").classList.remove("glitch-active");
- speakBossBanter("EVADED!");
- }
- }
-function useSkillHeal() {
- if (state.energy >= 30) {
- state.energy -= 30;
- state.hp = Math.min(state.maxHp, state.hp + 25);
- playSound("heal");
- updateHUD();
- updateSkillUI();
- }
- else playSound("error");
- }
-function useSkillShield() {
- if (state.energy >= 40) {
- state.energy -= 40;
- state.shieldActive = true;
- state.shieldDuration = 5000;
- playSound("shield");
- updateHUD();
- updateSkillUI();
- }
- else playSound("error");
- }
-function useSkillSlow() {
- if (state.energy >= 50) {
- state.energy -= 50;
- state.timeSlowActive = true;
- state.timeSlowDuration = 3000 + state.upgrades.slowDuration;
- playSound("slow");
- updateHUD();
- updateSkillUI();
- }
- else playSound("error");
- }
-function updateSkillUI() {
- [1,2,3].forEach(n => {
- const s = document.getElementById(`skill-f${
-n}
-`);
- if (s) {
- const cost = [30,40,50][n-1];
- if (state.energy >= cost) s.classList.add("ready");
- else s.classList.remove("ready");
- }
- }
-);
- }
-function speakBossBanter(t) {
- const el = document.getElementById("boss-talk-text");
- if (el) el.textContent = t;
- }
-function triggerBossBanter() {
- const p = ["LOCATING_IP...", "YOU.CANNOT.BREACH", "DELETING_KEYS..."];
- speakBossBanter(p[Math.floor(Math.random() * p.length)]);
- }
-function triggerBossSkill() {
-    initAudio();
- playSound("glitch");
- const r = Math.random();
-    if (r < 0.33) {
- speakBossBanter("SYSTEM GLITCH!");
- if (!state.settings.photosensitive) {
- document.getElementById("glitch-overlay").classList.add("glitch-active");
- setTimeout(() => document.getElementById("glitch-overlay").classList.remove("glitch-active"), 2500);
- }
- }
-    else if (r < 0.66) {
-        speakBossBanter("ORBITAL TARGETING!");
- state.dodgeWindowActive = true;
- if (!state.settings.photosensitive) playField.classList.add("warning-flash");
-        state.dodgeTimeout = setTimeout(() => {
-            playField.classList.remove("warning-flash");
-            if (state.dodgeWindowActive) {
- state.dodgeWindowActive = false;
- const b = document.createElement("div");
- b.className = "laser-beam";
- b.style.left = "50%";
- if (!state.settings.photosensitive) playField.appendChild(b);
- setTimeout(() => b.remove(), 1000);
- playSound("breach");
- triggerVisualGlitch();
-                if (!state.shieldActive) {
- let d = 35;
- if (state.playerClass === "brute") d = Math.floor(d * 0.7);
- state.hp = Math.max(0, state.hp - d);
- updateHUD();
- }
-                if (state.hp <= 0) gameOver();
-            }
-        }
-, 1500);
-    }
- else bossSkillNumpadCrack();
-}
-function bossSkillNumpadCrack() {
-    state.savedTypingValue = inputField.value;
- state.savedActiveTyping = state.activeTyping;
- pauseGameplay();
- showScreen("numpad");
- playSound("error");
-    const c = Math.floor(1000 + Math.random() * 9000).toString();
- state.numpad.targetCode = c;
- state.numpad.inputCode = "";
- state.numpad.timer = 5;
-    document.getElementById("numpad-target").textContent = c;
- document.getElementById("numpad-display").textContent = "----";
-    clearInterval(state.numpad.interval);
- state.numpad.interval = setInterval(() => {
- state.numpad.timer--;
- document.getElementById("numpad-time-left").textContent = `${
-state.numpad.timer}
-s`;
-        if (state.numpad.timer <= 0) {
- clearInterval(state.numpad.interval);
- playSound("breach");
- state.hp = Math.max(0, state.hp - 30);
- updateHUD();
- showScreen("battle");
- restoreSavedTypingState();
- resumeGameplay();
- if (state.hp <= 0) gameOver();
- }
-    }
-, 1000);
-}
-function restoreSavedTypingState() {
- if (state.savedTypingValue !== null && state.savedTypingValue !== "") {
- inputField.value = state.savedTypingValue;
- state.activeTyping = state.savedActiveTyping;
- state.fallingWords.forEach(w => {
- const t = w.displayWordText, i = state.activeTyping;
- if (t.startsWith(i) && i.length > 0) w.element.innerHTML = `<span class="typed-match">${
-t.substring(0, i.length)}
-</span>${
-t.substring(i.length)}
-`;
- else w.element.textContent = t;
- }
-);
- }
- }
-function handleNumpadInput(d) {
-    if (state.numpad.inputCode.length >= 4) return;
-    playSound("click");
-    state.numpad.inputCode = (state.numpad.inputCode + d).slice(0, 4);
-    const placeholder = "-".repeat(4 - state.numpad.inputCode.length);
-    document.getElementById("numpad-display").textContent = state.numpad.inputCode + placeholder;
-    if (state.numpad.inputCode.length === 4) {
- clearInterval(state.numpad.interval);
- if (state.numpad.inputCode === state.numpad.targetCode) playSound("win");
- else {
- playSound("breach");
- state.hp = Math.max(0, state.hp - 20);
- updateHUD();
- }
- showScreen("battle");
- restoreSavedTypingState();
- resumeGameplay();
- if (state.hp <= 0) gameOver();
- }
-}
-function triggerFinisherPhase() {
-    pauseGameplay();
- showScreen("finisher");
- playSound("slow");
- const p = WORD_BANK[state.currentLang].finisher, txt = p[Math.floor(Math.random() * p.length)];
-    state.finisher.passage = txt;
- state.finisher.words = txt.split(" ");
- state.finisher.currentIndex = 0;
- let l = state.currentLang === "en" ? 15 : 20;
- if (state.playerClass === "speed") l += 5;
- state.finisher.timer = l;
- renderPassageHTML();
-    clearInterval(state.finisher.interval);
- state.finisher.interval = setInterval(() => {
- state.finisher.timer -= 0.05;
- if (state.finisher.timer <= 0) {
- clearInterval(state.finisher.interval);
- playSound("error");
- state.bossHp = 35;
- state.finisherTriggered = false;
- showScreen("battle");
- resumeGameplay();
- }
- else document.getElementById("finisher-timer").textContent = `${
-state.finisher.timer.toFixed(2)}
-s`;
- }
-, 50);
-}
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
-function renderPassageHTML() {
-    const box = document.getElementById("passage-box"), typed = finisherInput.value;
-    box.innerHTML = state.finisher.words.map((w, idx) => {
-        const safeWord = escapeHtml(w);
-        if (idx < state.finisher.currentIndex) return `<span class="passage-word correct">${
-safeWord}
-</span>`;
-        if (idx === state.finisher.currentIndex) {
- let h = "";
- for (let i = 0;
- i < safeWord.length;
- i++) {
- if (i < typed.length) h += `<span class="${
-typed[i] === safeWord[i] ? 'typed-match' : 'typed-wrong'}
-">${
-escapeHtml(safeWord[i])}
-</span>`;
- else h += safeWord[i];
- }
- return `<span class="passage-word current">${
-h}
-</span>`;
- }
-        return `<span class="passage-word">${
-safeWord}
-</span>`;
-    }
-).join(" ");
-}
-function handleFinisherInput(e) {
-    const v = e.target.value, cw = state.finisher.words[state.finisher.currentIndex];
- playSound("click");
-     // Count keystrokes based on length difference for better mobile/IME support    const currentLen = v.length;
-    const prevLen = state.finisher.prevInputLen || 0;
-    if (currentLen > prevLen) state.totalKeystrokes += (currentLen - prevLen);
-    state.finisher.prevInputLen = currentLen;
-    if (v.length > 0 && !cw.startsWith(v)) playSound("error");
-    const last = state.finisher.currentIndex === state.finisher.words.length - 1;
-    if (v.endsWith(" ") || (last && v === cw)) {
- if (v.trim() === cw) {
- state.correctKeystrokes += cw.length;
- state.finisher.currentIndex++;
- e.target.value = "";
- state.finisher.prevInputLen = 0;
- if (state.finisher.currentIndex >= state.finisher.words.length) {
- clearInterval(state.finisher.interval);
- setTimeout(() => victory(), 300);
- }
- }
- }
-    renderPassageHTML();
-}
-function gameOver() {
- if (state.battleEnded) return;
- state.battleEnded = true;
- pauseGameplay();
- clearInterval(state.finisher.interval);
- clearInterval(state.numpad.interval);
- playSound("lose");
- document.getElementById("summary-title").textContent = "DECK ERROR";
- document.getElementById("summary-title").className = "text-red title-glow";
- calculateResults(false);
- showScreen("summary");
- }
-function victory() {
-    if (state.battleEnded) return;
- state.battleEnded = true;
- pauseGameplay();
- clearInterval(state.finisher.interval);
- clearInterval(state.numpad.interval);
- playSound("win");
- document.getElementById("summary-title").textContent = "NODE OVERRIDE GRANTED";
- document.getElementById("summary-title").className = "text-green title-glow";
-    if (state.currentLevel === state.maxUnlockedLevel && state.maxUnlockedLevel < 10) state.maxUnlockedLevel++;
- calculateResults(true);
- saveGame();
-    const k = `post_level_${
-state.currentLevel}
-`;
- if (STORY_CUTSCENES[k]) {
- state.cutscene.dialogues = STORY_CUTSCENES[k];
- state.cutscene.currentIndex = 0;
- state.cutscene.nextScreen = "summary";
- showScreen("cutscene");
- document.getElementById("cutscene-chat-box").innerHTML = "";
- renderCutsceneLine();
- }
- else showScreen("summary");
-}
-function calculateResults(win) {
-    const t = ((Date.now() - state.battleStartTime) / 1000) / 60, wpm = (state.correctKeystrokes > 0 && t > 0.01) ? Math.round((state.correctKeystrokes / 5) / t) : 0, acc = state.totalKeystrokes > 0 ? Math.round((state.correctKeystrokes / state.totalKeystrokes) * 100) : 100;
-    document.getElementById("summary-wpm").textContent = wpm;
- document.getElementById("summary-accuracy").textContent = `${
-acc}
-%`;
-    let cr = 0, stars = 0;
- if (win) {
- stars = 1;
- if (acc >= 85 && wpm >= 35) stars = 2;
- if (acc >= 95 && wpm >= 55 && state.hp >= (state.maxHp * 0.7)) stars = 3;
- cr = (state.currentLevel * 30) + (stars * 40);
- state.credits += cr;
- if (stars > (state.levelStars[state.currentLevel] || 0)) state.levelStars[state.currentLevel] = stars;
- }
-    document.getElementById("summary-credits-earned").textContent = `+${
-cr}
- CR`;
- document.getElementById("summary-stars").textContent = "โ…".repeat(stars) + "โ".repeat(3 - stars);
- updateWallet();
-}
-function openShopScreen() {
- initAudio();
- playSound("click");
- state.shopIndex = 0;
- modeIndex = 0;
- showScreen("shop");
- updateWallet();
- renderShopSelections();
- }
-function updateWallet() {
- document.getElementById("credits-hud-display").textContent = `${
-state.credits}
- CR`;
- document.getElementById("shop-credits-display").textContent = state.credits;
- }
-function renderShopSelections() {
-    const container = document.querySelector(".shop-grid");
-    if (!container) return;
-        const items = container.querySelectorAll('.select-shop-item');
-    items.forEach(card => {
-        const newCard = card.cloneNode(true);
-        newCard.addEventListener('click', () => purchaseUpgrade(newCard.getAttribute('data-item')));
-        newCard.setAttribute('tabindex', '0');
-        card.replaceWith(newCard);
-    }
-);
-}
-// Reapply keyboard listeners after dynamic shop selectionsfunction purchaseUpgrade(id) {
-    initAudio();
- const costs = {
- up_hp: 150, up_en: 150, item_auto_shield: 100, item_slow_overload: 120 }
-;
-    if (state.credits >= costs[id]) {
- state.credits -= costs[id];
- playSound("win");
- if (id === "up_hp") {
- state.upgrades.hpLevel++;
- state.maxHp += 25;
- state.hp = state.maxHp;
- }
- else if (id === "up_en") {
- state.upgrades.enLevel++;
- state.maxEnergy += 20;
- state.energy = state.maxEnergy;
- }
- else if (id === "item_auto_shield") state.upgrades.autoShield++;
- else if (id === "item_slow_overload") state.upgrades.slowDuration += 1500;
- saveGame();
- updateWallet();
- updateHUD();
- }
- else playSound("error");
-}
-function updateHUD() {
-    document.getElementById("player-hp-bar").style.width = `${
-(state.hp / state.maxHp) * 100}
-%`;
- document.getElementById("player-hp-text").textContent = `${
-state.hp}
-/${
-state.maxHp}
-`;
-    document.getElementById("player-energy-bar").style.width = `${
-(state.energy / state.maxEnergy) * 100}
-%`;
- document.getElementById("player-energy-text").textContent = `${
-state.energy}
-/${
-state.maxEnergy}
-`;
-    if (state.bossHp > 0) {
- document.getElementById("boss-hp-bar").style.width = `${
-(state.bossHp / state.bossMaxHp) * 100}
-%`;
- document.getElementById("boss-hp-text").textContent = `${
-Math.ceil((state.bossHp / state.bossMaxHp) * 100)}
-%`;
- }
-    const t = ((Date.now() - state.battleStartTime) / 1000) / 60, wpm = (state.correctKeystrokes > 0 && t > 0.016) ? Math.round((state.correctKeystrokes / 5) / t) : 0, acc = state.totalKeystrokes > 0 ? Math.round((state.correctKeystrokes / state.totalKeystrokes) * 100) : 100;
-    document.getElementById("wpm-display").textContent = wpm;
- document.getElementById("acc-display").textContent = `${
-acc}
-%`;
-    const comboValue = document.getElementById("combo-value");
- if (comboValue) comboValue.textContent = state.combo;
-    const cfg = getLevelConfig(state.currentLevel), p = document.getElementById("progress-display");
- if (cfg && p) p.textContent = cfg.type === "normal" ? `${
-state.wordsClearedThisLevel}
-/${
-cfg.wordsToClear}
-` : "BOSSFIGHT";
-}
-function setLanguage(l) {
- initAudio();
- playSound("click");
- state.currentLang = l;
- document.querySelectorAll(".btn-lang").forEach(b => b.classList.remove("active"));
- const b = document.querySelector(`.btn-lang[data-lang="${
-l}
-"]`);
- if (b) b.classList.add("active");
- updateKeyboardLayout(l);
- }
-function updateKeyboardLayout(lang) {
-    const map = KEYBOARD_MAP[lang] || KEYBOARD_MAP['en'];
-    if (!map) return;
-    document.querySelectorAll(".key-btn").forEach(btn => {
-        const code = btn.getAttribute("data-code");
-        if (map[code]) btn.textContent = map[code];
-    }
-);
-}
-function triggerVisualGlitch() {
- if (state.settings.photosensitive) return;
- document.body.classList.add("shake-active");
- document.getElementById("glitch-overlay").classList.add("glitch-active");
- setTimeout(() => {
- document.body.classList.remove("shake-active");
- document.getElementById("glitch-overlay").classList.remove("glitch-active");
- }
-, 300);
- }
-function openLogsView() {
-    initAudio();
- playSound("click");
- showScreen("logs");
- const s = document.getElementById("logs-sidebar-list");
- s.innerHTML = "";
-    NARRATIVE_LOGS.forEach(log => {
-        const u = state.maxUnlockedLevel >= log.zoneRequired, b = document.createElement("button");
- b.className = `log-item-btn ${
-u ? '' : 'locked'}
-`;
- b.textContent = u ? log.title : "๐”’ เนเธเนเธกเธเนเธญเธกเธนเธฅเธ–เธนเธเน€เธเนเธฒเธฃเธซเธฑเธช";
-        if (u) b.addEventListener("click", () => {
- playSound("click");
- document.querySelectorAll(".log-item-btn").forEach(x => x.classList.remove("selected"));
- b.classList.add("selected");
- document.getElementById("log-detail-viewer").innerHTML = `<h3>${
-log.title}
-</h3><hr class="neon-line" style="margin:15px 0;
-"><pre style="font-family:monospace;
-white-space:pre-wrap;
-font-size:14px;
-">${
-log.content}
-</pre>`;
- }
-);
-        s.appendChild(b);
-    }
-);
-}
-const CURRENT_SAVE_VERSION = 2;
-function saveGame() {
- const d = {
- version: CURRENT_SAVE_VERSION, maxUnlockedLevel: state.maxUnlockedLevel, levelStars: state.levelStars, credits: state.credits, upgrades: state.upgrades, unlockedLogs: state.unlockedLogs, playerClass: state.playerClass, settings: state.settings }
-;
- localStorage.setItem("cyberhack_save", JSON.stringify(d));
- }
-function loadGame() {
- const r = localStorage.getItem("cyberhack_save");
- if (!r) return;
- try {
- const d = JSON.parse(r);
- state.maxUnlockedLevel = d.maxUnlockedLevel || 1;
- state.levelStars = d.levelStars || {
-}
-;
- state.credits = d.credits || 0;
- state.upgrades = d.upgrades || {
- hpLevel: 0, enLevel: 0, autoShield: 0, slowDuration: 0 }
-;
- state.unlockedLogs = d.unlockedLogs || ["log_act1"];
- state.playerClass = d.playerClass || null;
- if (d.settings) {
- state.settings = {
- ...state.settings, ...d.settings }
-;
- document.getElementById("setting-photosensitive").checked = state.settings.photosensitive;
- document.getElementById("setting-scanlines").checked = state.settings.scanlines;
- document.getElementById("setting-volume").value = state.settings.volume;
- setVolume(state.settings.volume);
- document.body.classList.toggle("scanlines", state.settings.scanlines);
- }
- if (state.playerClass) {
- state.maxHp = (state.playerClass === "brute" ? 150 : 100) + state.upgrades.hpLevel * 25;
- state.maxEnergy = 100 + state.upgrades.enLevel * 20;
- document.getElementById("hud-deck-name").textContent = `ZERO_DECK:${
-state.playerClass.toUpperCase()}
-`;
- }
-updateWallet();
-}
-catch (e) {
-console.error("Load failed", e);
-}
-}
-// ==========================================// CLASSIC TYPING MODE LOGIC// ==========================================let classicInterval = null;
+// ==========================================// CLASSIC TYPING MODE LOGIC// ==========================================
+let classicInterval = null;
 function initClassicMode(lang = 'en') {
     state.screen = "classic-typing";
     state.classicLang = lang;
@@ -2458,7 +1779,8 @@ wIdx}
             wordEl.appendChild(letterEl);
         }
         container.appendChild(wordEl);
-                // Add space between words (except last)        if (wIdx < state.classicWords.length - 1) {
+                // Add space between words (except last)
+                if (wIdx < state.classicWords.length - 1) {
             container.appendChild(document.createTextNode(" "));
         }
     }
@@ -2466,7 +1788,8 @@ wIdx}
         updateClassicCursor();
 }
 function updateClassicCursor() {
-    // Clear active status from all letters first    document.querySelectorAll(".classic-letter").forEach(l => l.classList.remove("active"));
+    // Clear active status from all letters first
+    document.querySelectorAll(".classic-letter").forEach(l => l.classList.remove("active"));
         const currentWordEl = document.getElementById(`c-word-${
 state.classicWordIndex}
 `);
@@ -2476,7 +1799,8 @@ state.classicWordIndex}
             letters[state.classicCharIndex].classList.add("active");
         }
  else {
-            // Target the last letter if we've typed past it but haven't hit Space yet            const lastLetter = letters[letters.length - 1];
+            // Target the last letter if we've typed past it but haven't hit Space yet
+            const lastLetter = letters[letters.length - 1];
             if(lastLetter) lastLetter.classList.add("active");
         }
                 const container = document.getElementById("classic-text-display");
@@ -2607,4 +1931,5 @@ function endClassicMode() {
     if (accEl) accEl.textContent = acc + "%";
     if (summaryPanel) summaryPanel.classList.remove("hidden");
 }
+
 
