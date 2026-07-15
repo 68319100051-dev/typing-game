@@ -117,15 +117,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // Virtual Keyboard Effects
         document.addEventListener("keydown", (e) => {
         if (e.repeat) return;
-        const btn = document.querySelector(`.key-btn[data-code="${
-e.code}
-"]`);         if (btn) btn.classList.add("correct-press");
+        const btn = document.querySelector(`.key-btn[data-code="${e.code}"]`);         if (btn) btn.classList.add("correct-press");
     }
 );
     document.addEventListener("keyup", (e) => {
-        const btn = document.querySelector(`.key-btn[data-code="${
-e.code}
-"]`);         if (btn) btn.classList.remove("correct-press", "wrong-press");
+        const btn = document.querySelector(`.key-btn[data-code="${e.code}"]`);         if (btn) btn.classList.remove("correct-press", "wrong-press");
     }
 );
     updateWallet();
