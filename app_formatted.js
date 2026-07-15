@@ -421,9 +421,7 @@ function showScreen(screenName) {
  else mainHUD.classList.add("hidden");
  }
         document.querySelectorAll(".terminal-screen").forEach(s => {
-            if (s.id === `screen-${
-screenName}
-`) {
+            if (s.id === `screen-${screenName}`) {
  s.classList.remove("hidden");
  s.style.display = "flex";
  }
@@ -477,9 +475,7 @@ function selectClass(className) {
  state.hp = state.maxHp;
  state.maxEnergy = 100 + state.upgrades.enLevel * 20;
  state.energy = state.maxEnergy;
- document.getElementById("hud-deck-name").textContent = `ZERO_DECK:${
-className.toUpperCase()}
-`;
+ document.getElementById("hud-deck-name").textContent = `ZERO_DECK:${className.toUpperCase()}`;
  startTutorialMode();
  }
 function renderLearnLessons() {
@@ -492,19 +488,7 @@ function renderLearnLessons() {
         const isDone = completed.includes(lesson.id);
         const card = document.createElement("div");
         card.className = "learn-card" + (isDone ? " completed" : "");
-        card.innerHTML = `            <div class="learn-card-header">                <span class="learn-card-icon">${
-icons[i] || "๐“–"}
-</span>                <span class="learn-card-num">${
-String(lesson.id).padStart(2, '0')}
-</span>            </div>            <div class="learn-card-title">${
-lesson.title}
-</div>            <div class="learn-card-desc">${
-lesson.desc}
-</div>            <div class="learn-card-meta">                <span>${
-lesson.subLessons.length}
- เธเธ—เธขเนเธญเธข</span>                <span class="learn-card-status">${
-isDone ? "โ“ PASSED" : "โ–บ START"}
-</span>            </div>        `;
+        card.innerHTML = `            <div class="learn-card-header">                <span class="learn-card-icon">${icons[i] || "๐“–"}</span>                <span class="learn-card-num">${String(lesson.id).padStart(2, '0')}</span>            </div>            <div class="learn-card-title">${lesson.title}</div>            <div class="learn-card-desc">${lesson.desc}</div>            <div class="learn-card-meta">                <span>${lesson.subLessons.length}เธเธ—เธขเนเธญเธข</span>                <span class="learn-card-status">${isDone ? "โ“ PASSED" : "โ–บ START"}</span>            </div>        `;
         card.setAttribute('tabindex', '0');
         card.addEventListener('click', () => startLearnLesson(lesson));
         card.addEventListener('keydown', (e) => {
@@ -522,11 +506,7 @@ isDone ? "โ“ PASSED" : "โ–บ START"}
     const bar = document.getElementById("learn-overall-progress");
  if (bar) bar.style.width = pct + "%";
     const txt = document.getElementById("learn-progress-text");
- if (txt) txt.textContent = `${
-completed.length}
- / ${
-LEARN_LESSONS.length}
- COMPLETED`;
+ if (txt) txt.textContent = `${completed.length}/ ${LEARN_LESSONS.length}COMPLETED`;
 }
 function startLearnLesson(lesson) {
     initAudio();
@@ -546,13 +526,7 @@ function startLearnLesson(lesson) {
         langHint = " [Switch to English Keyboard]";
         if (banner) banner.style.color = "var(--cyber-cyan)";
     }
-    if (banner) banner.textContent = `LESSON ${
-lesson.id}
-: ${
-lesson.desc}
-${
-langHint}
-`;
+    if (banner) banner.textContent = `LESSON ${lesson.id}: ${lesson.desc}${langHint}`;
     document.getElementById("zero-chat-container").classList.remove("hidden");
     const deck = document.querySelector("#screen-tutorial .skills-deck");
  if(deck) deck.style.display = "none";
@@ -623,11 +597,7 @@ function showSubLessonTarget(sub) {
         const val = e.target.value;
          if (sub.target.startsWith(val)) {
              const match = sub.target.substring(0, val.length), remain = sub.target.substring(val.length);
-             el.innerHTML = `<span class="typed-match">${
-match}
-</span>${
-remain}
-`;
+             el.innerHTML = `<span class="typed-match">${match}</span>${remain}`;
              if (val === sub.target) {
                  playSound("laser");
                  tutorialInput.value = "";
@@ -640,11 +610,7 @@ remain}
              e.target.value = val.substring(0, val.length - 1);
              const newVal = e.target.value;
              const match = sub.target.substring(0, newVal.length), remain = sub.target.substring(newVal.length);
-             el.innerHTML = `<span class="typed-match">${
-match}
-</span>${
-remain}
-`;
+             el.innerHTML = `<span class="typed-match">${match}</span>${remain}`;
          }
     }
 ;
@@ -655,9 +621,7 @@ function startPracticeSession() {
     const zone = document.getElementById("practice-zone").value, timeLimit = parseInt(document.getElementById("practice-time").value);
     state.currentLevel = 99;
  state.practiceConfig = {
- name: `PRACTICE: ${
-zone.toUpperCase()}
-`, speed: zone === "zone1" ? 1.0 : (zone === "zone2" ? 1.4 : 1.8), wordsToClear: 999, maxSimultaneous: 4, type: "normal" }
+ name: `PRACTICE: ${zone.toUpperCase()}`, speed: zone === "zone1" ? 1.0 : (zone === "zone2" ? 1.4 : 1.8), wordsToClear: 999, maxSimultaneous: 4, type: "normal" }
 ;
     proceedToBattle(99);
     let timeLeft = timeLimit;
@@ -684,14 +648,10 @@ function renderCutsceneLine() {
     const data = state.cutscene.dialogues[state.cutscene.currentIndex];
  if (!data) return;
     const box = document.getElementById("cutscene-chat-box"), bubble = document.createElement("div");
-    bubble.className = `chat-bubble ${
-data.speaker.toLowerCase()}
-`;
+    bubble.className = `chat-bubble ${data.speaker.toLowerCase()}`;
  box.appendChild(bubble);
     let charIdx = 0;
- bubble.textContent = `${
-data.speaker}
-: `;
+ bubble.textContent = `${data.speaker}: `;
     clearInterval(state.cutscene.typewriterInterval);
     state.cutscene.typewriterInterval = setInterval(() => {
  bubble.textContent += data.text[charIdx];
@@ -708,11 +668,7 @@ function advanceCutscene() {
  clearInterval(state.cutscene.typewriterInterval);
  const data = state.cutscene.dialogues[state.cutscene.currentIndex], box = document.getElementById("cutscene-chat-box");
  let bubble = box.lastChild;
- if (bubble && data) bubble.textContent = `${
-data.speaker}
-: ${
-data.text}
-`;
+ if (bubble && data) bubble.textContent = `${data.speaker}: ${data.text}`;
  state.cutscene.currentIndex++;
  if (state.cutscene.currentIndex < state.cutscene.dialogues.length) renderCutsceneLine();
  else finishCutscene();
@@ -770,9 +726,7 @@ function loadTutorialStep() {
 }
 function spawnTutorialTarget(t, ty) {
  const el = document.createElement("div");
- el.className = `word-node ${
-ty}
-`;
+ el.className = `word-node ${ty}`;
  el.textContent = t;
  el.style.left = "50%";
  el.style.top = "30%";
@@ -791,11 +745,7 @@ function handleTutorialTypingInput(e) {
     if (node && data && data.targetText) {
  if (data.targetText.toLowerCase().startsWith(val.toLowerCase())) {
  const m = data.targetText.substring(0, val.length), r = data.targetText.substring(val.length);
- node.innerHTML = `<span class="typed-match">${
-m}
-</span>${
-r}
-`;
+ node.innerHTML = `<span class="typed-match">${m}</span>${r}`;
  }
  else node.textContent = data.targetText;
  }
@@ -887,13 +837,7 @@ function renderLevelNodes() {
  else if (i === state.maxUnlockedLevel) cls += " active-unlocked";
  if (i === 10) cls += " boss-node";
  node.className = cls;
- node.innerHTML = `<span class="node-num">${
-i === 10 ? "BOSS" : `1.${
-i}
-`}
-</span><div class="node-stars">${
-"โ…".repeat(state.levelStars[i] || 0)}
-</div>`;
+ node.innerHTML = `<span class="node-num">${i === 10 ? "BOSS" : `1.${i}`}</span><div class="node-stars">${"โ…".repeat(state.levelStars[i] || 0)}</div>`;
         if (!isLocked) node.addEventListener("click", () => selectLevel(i));
  grid.appendChild(node);
     }
@@ -959,9 +903,7 @@ function proceedToBattle(levelNum) {
  updateHUD();
  updateSkillUI();
  resumeGameplay();
- speakBossBanter(`BREACHING NODE 1.${
-levelNum}
-...`);
+ speakBossBanter(`BREACHING NODE 1.${levelNum}...`);
     clearInterval(state.energyInterval);
  state.energyInterval = setInterval(() => {
  if (state.energy < state.maxEnergy) {
@@ -1020,14 +962,10 @@ function spawnWord(forcedType = null) {
     let spd = config.speed;
  if (state.playerClass === "speed") spd *= 0.8;
     const el = document.createElement("div");
- el.className = `word-node ${
-type}
-`;
+ el.className = `word-node ${type}`;
  el.textContent = txt;
     const x = Math.max(80, Math.min(playField.clientWidth - 80, Math.floor(Math.random() * playField.clientWidth)));
-    el.style.left = `${
-x}
-px`;
+    el.style.left = `${x}px`;
  el.style.top = `-20px`;
  playField.appendChild(el);
     state.fallingWords.push({
@@ -1052,9 +990,7 @@ function updatePhysics() {
  i--) {
  const w = state.fallingWords[i];
  w.y += w.speed * mult;
- w.element.style.top = `${
-w.y}
-px`;
+ w.element.style.top = `${w.y}px`;
  if (state.combo >= 3 && !state.settings.photosensitive) w.element.classList.add("combo-glow");
  else w.element.classList.remove("combo-glow");
  if (w.y >= firewallY + 20) {
@@ -1091,11 +1027,7 @@ function handleMainTypingInput(e) {
  if (e.inputType !== "deleteContentBackward" && e.inputType !== "deleteContentForward") state.totalKeystrokes++;
     const match = state.fallingWords.find(w => w.displayWordText.startsWith(state.activeTyping) && state.activeTyping.length > 0);
     if (match) {
- match.element.innerHTML = `<span class="typed-match">${
-match.displayWordText.substring(0, state.activeTyping.length)}
-</span>${
-match.displayWordText.substring(state.activeTyping.length)}
-`;
+ match.element.innerHTML = `<span class="typed-match">${match.displayWordText.substring(0, state.activeTyping.length)}</span>${match.displayWordText.substring(state.activeTyping.length)}`;
  }
     state.fallingWords.forEach(w => {
  if (w !== match) w.element.textContent = w.displayWordText;
@@ -1230,9 +1162,7 @@ function useSkillSlow() {
  }
 function updateSkillUI() {
  [1,2,3].forEach(n => {
- const s = document.getElementById(`skill-f${
-n}
-`);
+ const s = document.getElementById(`skill-f${n}`);
  if (s) {
  const cost = [30,40,50][n-1];
  if (state.energy >= cost) s.classList.add("ready");
@@ -1303,9 +1233,7 @@ function bossSkillNumpadCrack() {
     clearInterval(state.numpad.interval);
  state.numpad.interval = setInterval(() => {
  state.numpad.timer--;
- document.getElementById("numpad-time-left").textContent = `${
-state.numpad.timer}
-s`;
+ document.getElementById("numpad-time-left").textContent = `${state.numpad.timer}s`;
         if (state.numpad.timer <= 0) {
  clearInterval(state.numpad.interval);
  playSound("breach");
@@ -1325,11 +1253,7 @@ function restoreSavedTypingState() {
  state.activeTyping = state.savedActiveTyping;
  state.fallingWords.forEach(w => {
  const t = w.displayWordText, i = state.activeTyping;
- if (t.startsWith(i) && i.length > 0) w.element.innerHTML = `<span class="typed-match">${
-t.substring(0, i.length)}
-</span>${
-t.substring(i.length)}
-`;
+ if (t.startsWith(i) && i.length > 0) w.element.innerHTML = `<span class="typed-match">${t.substring(0, i.length)}</span>${t.substring(i.length)}`;
  else w.element.textContent = t;
  }
 );
@@ -1378,9 +1302,7 @@ function triggerFinisherPhase() {
  showScreen("battle");
  resumeGameplay();
  }
- else document.getElementById("finisher-timer").textContent = `${
-state.finisher.timer.toFixed(2)}
-s`;
+ else document.getElementById("finisher-timer").textContent = `${state.finisher.timer.toFixed(2)}s`;
  }
 , 50);
 }
@@ -1393,23 +1315,15 @@ function renderPassageHTML() {
     const box = document.getElementById("passage-box"), typed = finisherInput.value;
     box.innerHTML = state.finisher.words.map((w, idx) => {
         const safeWord = escapeHtml(w);
-        if (idx < state.finisher.currentIndex) return `<span class="passage-word correct">${
-safeWord}
-</span>`;
+        if (idx < state.finisher.currentIndex) return `<span class="passage-word correct">${safeWord}</span>`;
         if (idx === state.finisher.currentIndex) {
  let h = "";
  for (let i = 0;
  i < safeWord.length;
  i++) {
- if (i < typed.length) h += `<span class="${
-typed[i] === safeWord[i] ? 'typed-match' : 'typed-wrong'}
-">${ escapeHtml(safeWord[i])} </span>`;  else h += safeWord[i];  }  return `<span class="passage-word current">${
-h}
-</span>`;
+ if (i < typed.length) h += `<span class="${typed[i] === safeWord[i] ? 'typed-match' : 'typed-wrong'}">${ escapeHtml(safeWord[i])} </span>`;  else h += safeWord[i];  }  return `<span class="passage-word current">${h}</span>`;
  }
-        return `<span class="passage-word">${
-safeWord}
-</span>`;
+        return `<span class="passage-word">${safeWord}</span>`;
     }
 ).join(" ");
 }
@@ -1461,9 +1375,7 @@ function victory() {
     if (state.currentLevel === state.maxUnlockedLevel && state.maxUnlockedLevel < 10) state.maxUnlockedLevel++;
  calculateResults(true);
  saveGame();
-    const k = `post_level_${
-state.currentLevel}
-`;
+    const k = `post_level_${state.currentLevel}`;
  if (STORY_CUTSCENES[k]) {
  state.cutscene.dialogues = STORY_CUTSCENES[k];
  state.cutscene.currentIndex = 0;
@@ -1477,9 +1389,7 @@ state.currentLevel}
 function calculateResults(win) {
     const t = ((Date.now() - state.battleStartTime) / 1000) / 60, wpm = (state.correctKeystrokes > 0 && t > 0.01) ? Math.round((state.correctKeystrokes / 5) / t) : 0, acc = state.totalKeystrokes > 0 ? Math.round((state.correctKeystrokes / state.totalKeystrokes) * 100) : 100;
     document.getElementById("summary-wpm").textContent = wpm;
- document.getElementById("summary-accuracy").textContent = `${
-acc}
-%`;
+ document.getElementById("summary-accuracy").textContent = `${acc}%`;
     let cr = 0, stars = 0;
  if (win) {
  stars = 1;
@@ -1489,9 +1399,7 @@ acc}
  state.credits += cr;
  if (stars > (state.levelStars[state.currentLevel] || 0)) state.levelStars[state.currentLevel] = stars;
  }
-    document.getElementById("summary-credits-earned").textContent = `+${
-cr}
- CR`;
+    document.getElementById("summary-credits-earned").textContent = `+${cr}CR`;
  document.getElementById("summary-stars").textContent = "โ…".repeat(stars) + "โ".repeat(3 - stars);
  updateWallet();
 }
@@ -1505,9 +1413,7 @@ function openShopScreen() {
  renderShopSelections();
  }
 function updateWallet() {
- document.getElementById("credits-hud-display").textContent = `${
-state.credits}
- CR`;
+ document.getElementById("credits-hud-display").textContent = `${state.credits}CR`;
  document.getElementById("shop-credits-display").textContent = state.credits;
  }
 function renderShopSelections() {
@@ -1550,52 +1456,28 @@ function purchaseUpgrade(id) {
  else playSound("error");
 }
 function updateHUD() {
-    document.getElementById("player-hp-bar").style.width = `${
-(state.hp / state.maxHp) * 100}
-%`;
- document.getElementById("player-hp-text").textContent = `${
-state.hp}
-/${
-state.maxHp}
-`;
-    document.getElementById("player-energy-bar").style.width = `${
-(state.energy / state.maxEnergy) * 100}
-%`;
- document.getElementById("player-energy-text").textContent = `${
-state.energy}
-/${
-state.maxEnergy}
-`;
+    document.getElementById("player-hp-bar").style.width = `${(state.hp / state.maxHp) * 100}%`;
+ document.getElementById("player-hp-text").textContent = `${state.hp}/${state.maxHp}`;
+    document.getElementById("player-energy-bar").style.width = `${(state.energy / state.maxEnergy) * 100}%`;
+ document.getElementById("player-energy-text").textContent = `${state.energy}/${state.maxEnergy}`;
     if (state.bossHp > 0) {
- document.getElementById("boss-hp-bar").style.width = `${
-(state.bossHp / state.bossMaxHp) * 100}
-%`;
- document.getElementById("boss-hp-text").textContent = `${
-Math.ceil((state.bossHp / state.bossMaxHp) * 100)}
-%`;
+ document.getElementById("boss-hp-bar").style.width = `${(state.bossHp / state.bossMaxHp) * 100}%`;
+ document.getElementById("boss-hp-text").textContent = `${Math.ceil((state.bossHp / state.bossMaxHp) * 100)}%`;
  }
     const t = ((Date.now() - state.battleStartTime) / 1000) / 60, wpm = (state.correctKeystrokes > 0 && t > 0.016) ? Math.round((state.correctKeystrokes / 5) / t) : 0, acc = state.totalKeystrokes > 0 ? Math.round((state.correctKeystrokes / state.totalKeystrokes) * 100) : 100;
     document.getElementById("wpm-display").textContent = wpm;
- document.getElementById("acc-display").textContent = `${
-acc}
-%`;
+ document.getElementById("acc-display").textContent = `${acc}%`;
     const comboValue = document.getElementById("combo-value");
  if (comboValue) comboValue.textContent = state.combo;
     const cfg = getLevelConfig(state.currentLevel), p = document.getElementById("progress-display");
- if (cfg && p) p.textContent = cfg.type === "normal" ? `${
-state.wordsClearedThisLevel}
-/${
-cfg.wordsToClear}
-` : "BOSSFIGHT";
+ if (cfg && p) p.textContent = cfg.type === "normal" ? `${state.wordsClearedThisLevel}/${cfg.wordsToClear}` : "BOSSFIGHT";
 }
 function setLanguage(l) {
  initAudio();
  playSound("click");
  state.currentLang = l;
  document.querySelectorAll(".btn-lang").forEach(b => b.classList.remove("active"));
- const b = document.querySelector(`.btn-lang[data-lang="${
-l}
-"]`);  if (b) b.classList.add("active");
+ const b = document.querySelector(`.btn-lang[data-lang="${l}"]`);  if (b) b.classList.add("active");
  updateKeyboardLayout(l);
  }
 function updateKeyboardLayout(lang) {
@@ -1625,20 +1507,13 @@ function openLogsView() {
  s.innerHTML = "";
     NARRATIVE_LOGS.forEach(log => {
         const u = state.maxUnlockedLevel >= log.zoneRequired, b = document.createElement("button");
- b.className = `log-item-btn ${
-u ? '' : 'locked'}
-`;
+ b.className = `log-item-btn ${u ? '' : 'locked'}`;
  b.textContent = u ? log.title : "๐”’ เนเธเนเธกเธเนเธญเธกเธนเธฅเธ–เธนเธเน€เธเนเธฒเธฃเธซเธฑเธช";
         if (u) b.addEventListener("click", () => {
  playSound("click");
  document.querySelectorAll(".log-item-btn").forEach(x => x.classList.remove("selected"));
  b.classList.add("selected");
- document.getElementById("log-detail-viewer").innerHTML = `<h3>${
-log.title}
-</h3><hr class="neon-line" style="margin:15px 0; "><pre style="font-family:monospace;
-white-space:pre-wrap;
-font-size:14px;
-">${ log.content} </pre>`;  } );         s.appendChild(b);     } ); } const CURRENT_SAVE_VERSION = 2; function saveGame() {  const d = {  version: CURRENT_SAVE_VERSION, maxUnlockedLevel: state.maxUnlockedLevel, levelStars: state.levelStars, credits: state.credits, upgrades: state.upgrades, unlockedLogs: state.unlockedLogs, playerClass: state.playerClass, settings: state.settings } ;  localStorage.setItem("cyberhack_save", JSON.stringify(d));
+ document.getElementById("log-detail-viewer").innerHTML = `<h3>${log.title}</h3><hr class="neon-line" style="margin:15px 0; "><pre style="font-family:monospace;white-space:pre-wrap;font-size:14px;">${ log.content} </pre>`;  } );         s.appendChild(b);     } ); } const CURRENT_SAVE_VERSION = 2; function saveGame() {  const d = {  version: CURRENT_SAVE_VERSION, maxUnlockedLevel: state.maxUnlockedLevel, levelStars: state.levelStars, credits: state.credits, upgrades: state.upgrades, unlockedLogs: state.unlockedLogs, playerClass: state.playerClass, settings: state.settings } ;  localStorage.setItem("cyberhack_save", JSON.stringify(d));
  }
 function loadGame() {
  const r = localStorage.getItem("cyberhack_save");
@@ -1668,9 +1543,7 @@ function loadGame() {
  if (state.playerClass) {
  state.maxHp = (state.playerClass === "brute" ? 150 : 100) + state.upgrades.hpLevel * 25;
  state.maxEnergy = 100 + state.upgrades.enLevel * 20;
- document.getElementById("hud-deck-name").textContent = `ZERO_DECK:${
-state.playerClass.toUpperCase()}
-`;
+ document.getElementById("hud-deck-name").textContent = `ZERO_DECK:${state.playerClass.toUpperCase()}`;
  }
  updateWallet();
  }
@@ -1775,9 +1648,7 @@ function renderClassicWords() {
         state.classicWords.forEach((word, wIdx) => {
         const wordEl = document.createElement("span");
         wordEl.className = "classic-word";
-        wordEl.id = `c-word-${
-wIdx}
-`;
+        wordEl.id = `c-word-${wIdx}`;
                 for (let i = 0;
  i < word.length;
  i++) {
@@ -1798,9 +1669,7 @@ wIdx}
 function updateClassicCursor() {
     // Clear active status from all letters first
     document.querySelectorAll(".classic-letter").forEach(l => l.classList.remove("active"));
-        const currentWordEl = document.getElementById(`c-word-${
-state.classicWordIndex}
-`);
+        const currentWordEl = document.getElementById(`c-word-${state.classicWordIndex}`);
     if (currentWordEl) {
         const letters = currentWordEl.querySelectorAll(".classic-letter");
         if (state.classicCharIndex < letters.length) {
