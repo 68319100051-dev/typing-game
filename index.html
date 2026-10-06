@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Fira+Code:wght@400;700&family=Chakra+Petch:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" crossorigin href="/typing-game/assets/index-DMOxaTHg.css">
+  <link rel="stylesheet" crossorigin href="/typing-game/assets/index-Bpod3_4i.css">
 </head>
 <body class="crt scanlines">
     <!-- CRT screen glass effect wrapper -->
@@ -133,6 +133,8 @@
                         <div class="classic-timer text-cyan" id="classic-timer">60s</div>
                         <button class="btn-retro" id="btn-classic-restart">RESTART [TAB]</button>
                     </div>
+                    <label class="classic-input-label" for="classic-mobile-input">พิมพ์คำที่เห็น แล้วกด Space เพื่อไปคำถัดไป</label>
+                    <input id="classic-mobile-input" class="classic-mobile-input" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" aria-label="พิมพ์คำในโหมดคลาสสิก" placeholder="แตะที่นี่เพื่อเริ่มพิมพ์">
                     <div class="classic-text-container" id="classic-text-display">
                         <!-- Words will be injected here -->
                     </div>
@@ -265,6 +267,7 @@
                     <div class="terminal-input-bar">
                         <span class="prompt-text">root@training_deck:~$</span>
                         <input type="text" id="tutorial-input" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="พิมพ์ตามเป้าหมายเพื่อฝึกสอน...">
+                        <button class="btn-retro btn-fire" id="btn-tutorial-fire" type="button">ยิง / SPACE</button>
                     </div>
                 </div>
             </section>
@@ -282,8 +285,8 @@
                     </div>
                     <div class="class-card select-option" data-class="precision" tabindex="0" id="class-precision">
                         <div class="class-title text-green">[2] PRECISION CODER</div>
-                        <div class="class-desc">เน้นความแม่นยำ ทำดาเมจสูงสุด + ลดบทลงโทษเมื่อพิมพ์ผิด</div>
-                        <div class="class-stat">2x Combo Multiplier | 50% Fail Penalty Avoidance</div>
+                        <div class="class-desc">โจมตีแรงขึ้นและสะสมคอมโบได้เร็วขึ้น</div>
+                        <div class="class-stat">+60% Damage | Combo ทุก 5 คำ</div>
                     </div>
                     <div class="class-card select-option" data-class="brute" tabindex="0" id="class-brute">
                         <div class="class-title text-yellow">[3] BRUTE FORCE</div>
@@ -292,7 +295,7 @@
                     </div>
                 </div>
                 <div class="terminal-footer">
-                    <span class="blink-cyan">&gt; เลือกคลาสเพื่อติดดตั้งแพ็คเกจเริ่มต้นของคุณ</span>
+                    <span class="blink-cyan">&gt; เลือกคลาสเพื่อติดตั้งแพ็คเกจเริ่มต้นของคุณ</span>
                 </div>
             </section>
 
@@ -376,6 +379,7 @@
                     <div class="terminal-input-bar">
                         <span class="prompt-text">root@zero_deck:~$</span>
                         <input type="text" id="terminal-input" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="พิมพ์คำศัพท์แล้วกด [SPACE]...">
+                        <button class="btn-retro btn-fire" id="btn-fire" type="button">ยิง / SPACE</button>
                     </div>
 
                     <!-- VIRTUAL KEYBOARD -->
@@ -469,6 +473,7 @@
                     <div class="numpad-desc">พิมพ์รหัสด้วยปุ่มตัวเลขเพื่อปลดรหัสการสื่อสาร:</div>
                     <div class="numpad-passcode" id="numpad-target">0000</div>
                     <div class="numpad-input text-green" id="numpad-display">----</div>
+                    <input id="numpad-mobile-input" class="numpad-mobile-input" type="text" inputmode="numeric" autocomplete="off" maxlength="4" aria-label="พิมพ์รหัสตัวเลข 4 หลัก" placeholder="แตะที่นี่เพื่อพิมพ์รหัส">
                     <div class="numpad-timer">TIMER: <span id="numpad-time-left" class="text-yellow">5s</span></div>
                 </div>
             </section>
@@ -544,7 +549,7 @@
                         </div>
                         <div class="shop-card select-shop-item" data-item="item_auto_shield" tabindex="0">
                             <div class="item-title text-green">เกราะอัจฉริยะ (AUTO SHIELD CHIP)</div>
-                            <div class="item-desc">รับบาเรียป้องกันดาเมจจากการพิมพ์ผิด 1 ครั้งต่อด่านโดยอัตโนมัติ</div>
+                            <div class="item-desc">ป้องกันความเสียหายจากคำที่ตกถึง Firewall 1 ครั้งต่อด่านต่อชิป</div>
                             <div class="item-cost text-yellow">ราคา: 100 CR</div>
                         </div>
                         <div class="shop-card select-shop-item" data-item="item_slow_overload" tabindex="0">
@@ -606,8 +611,8 @@
     </div>
     
     <!-- LOAD CUSTOM GAME SCRIPTS -->
-    <script src="words.js?v=2"></script>
-    <script src="audio.js?v=2"></script>
-    <script src="app.js?v=2"></script>
+    <script src="words.js?v=3"></script>
+    <script src="audio.js?v=3"></script>
+    <script src="app.js?v=3"></script>
 </body>
 </html>
