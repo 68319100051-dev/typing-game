@@ -1915,3 +1915,75 @@ body.scanlines::before {
 
 .numpad-mobile-input { display: block; width: min(100%, 260px); margin: 14px auto; padding: 11px 14px; border: 1px solid var(--cyber-cyan); border-radius: 8px; outline: none; background: rgba(4, 15, 24, .92); color: var(--terminal-green); text-align: center; font: 700 22px "Share Tech Mono", monospace; }
 .numpad-mobile-input:focus-visible { box-shadow: 0 0 0 2px rgba(0, 240, 255, .28); }
+
+/* Compact touch layout for phones */
+@media (max-width: 480px) {
+  .hud-header {
+    height: auto;
+    min-height: 78px;
+    padding: 7px 10px;
+    align-items: stretch;
+    gap: 4px;
+    font-size: 12px;
+  }
+  .hud-section {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 8px;
+  }
+  .hud-item { font-size: 12px; }
+  .hud-item-progress { gap: 4px; }
+  .bar-container { width: 48px; height: 10px; }
+  .battle-hud {
+    height: auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 7px;
+    padding: 5px 0 8px;
+  }
+  .combo-meter {
+    width: 100%;
+    min-width: 0;
+    height: 40px;
+    flex-direction: row;
+    gap: 10px;
+  }
+  .skills-deck {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    height: auto;
+    gap: 6px;
+    font-size: 12px;
+  }
+  .skill-key {
+    width: 100%;
+    min-height: 48px;
+    padding: 5px 2px;
+    font-size: 12px;
+    touch-action: manipulation;
+  }
+  .key-badge, .skill-name { font-size: 11px; }
+  .terminal-input-bar {
+    align-items: stretch;
+    padding: 9px;
+    gap: 6px;
+  }
+  #terminal-input, #tutorial-input {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 44px;
+    padding: 9px 10px;
+    border: 1px solid rgba(0, 243, 255, .48);
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+  #terminal-input:focus, #tutorial-input:focus {
+    border-color: var(--cyber-cyan);
+    box-shadow: 0 0 0 2px rgba(0, 243, 255, .15);
+  }
+  .play-field { min-height: 220px; }
+  .virtual-keyboard { display: none; }
+}
